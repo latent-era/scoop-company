@@ -10,41 +10,55 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, Gift, ChevronDown } from "lucide-react";
 
 const FLAVOURS = [
-  { name: "Milk Chocolate", color: "from-[#8B4513] to-[#654321]", textColor: "text-white" },
-  { name: "Dark Chocolate", color: "from-[#3E2723] to-[#1B0000]", textColor: "text-white" },
-  { name: "Sticky Toffee", color: "from-[#D4A574] to-[#C19A6B]", textColor: "text-[#3D2B1F]" },
-  { name: "Oreo", color: "from-[#2C2C2C] to-[#1A1A1A]", textColor: "text-white" },
-  { name: "Candy Cane", color: "from-[#FF6B6B] to-[#FF4757]", textColor: "text-white" },
-  { name: "Pistachio", color: "from-[#93C572] to-[#6FA54B]", textColor: "text-white" },
-  { name: "Christmas Pudding", color: "from-[#5D4037] to-[#3E2723]", textColor: "text-white" }
+  { name: "Milk Chocolate", color: "from-[#8B4513] to-[#654321]", textColor: "text-white", allergens: ["Vg", "V", "H", "GF"] },
+  { name: "Dark Chocolate", color: "from-[#3E2723] to-[#1B0000]", textColor: "text-white", allergens: ["Vg", "V", "H", "GF"] },
+  { name: "Sticky Toffee", color: "from-[#D4A574] to-[#C19A6B]", textColor: "text-[#3D2B1F]", allergens: ["D", "V", "E", "G"] },
+  { name: "Oreo", color: "from-[#2C2C2C] to-[#1A1A1A]", textColor: "text-white", allergens: ["D", "V", "S", "G"] },
+  { name: "Candy Cane", color: "from-[#FF6B6B] to-[#FF4757]", textColor: "text-white", allergens: ["D", "V", "GF"] },
+  { name: "Pistachio", color: "from-[#93C572] to-[#6FA54B]", textColor: "text-white", allergens: ["D", "V", "N", "GF"] },
+  { name: "Christmas Pudding", color: "from-[#5D4037] to-[#3E2723]", textColor: "text-white", allergens: ["D", "V", "A", "GF"] },
+  { name: "Mint Chocolate", color: "from-[#3EB489] to-[#2C8C6B]", textColor: "text-white", allergens: ["D", "V", "GF"] },
+  { name: "Biscoff", color: "from-[#C19A6B] to-[#A67C52]", textColor: "text-white", allergens: ["D", "V", "S", "G"] },
+  { name: "Bounty", color: "from-[#8B4513] to-[#5C2E1F]", textColor: "text-white", allergens: ["Vg", "GF"] },
+  { name: "Gingerbread Man", color: "from-[#9C6644] to-[#704214]", textColor: "text-white", allergens: ["D", "V", "S", "G"] },
+  { name: "Raspberry", color: "from-[#E30B5D] to-[#C20747]", textColor: "text-white", allergens: ["Vg", "GF"] },
+  { name: "Mango", color: "from-[#FFA500] to-[#FF8C00]", textColor: "text-white", allergens: ["Vg", "GF"] },
+  { name: "Baileys", color: "from-[#B8906B] to-[#9A7556]", textColor: "text-white", allergens: ["D", "V", "A", "GF"] },
+  { name: "Spiced Orange", color: "from-[#FF6347] to-[#E5533D]", textColor: "text-white", allergens: ["D", "V", "A", "GF"] },
+  { name: "Cinnamon Roll", color: "from-[#D4A574] to-[#B8906B]", textColor: "text-[#3D2B1F]", allergens: ["D", "V", "E", "G"] },
+  { name: "Cotton Candy", color: "from-[#FFC0CB] to-[#FFB6C1]", textColor: "text-[#3D2B1F]", allergens: ["D", "V", "GF"] },
+  { name: "Mixed Berries", color: "from-[#8E4585] to-[#6B2D5C]", textColor: "text-white", allergens: ["Vg", "GF"] },
+  { name: "Strawberry", color: "from-[#FF6B9D] to-[#FF4081]", textColor: "text-white", allergens: ["Vg", "H", "GF"] },
+  { name: "Nutella", color: "from-[#7B3F00] to-[#5C2E00]", textColor: "text-white", allergens: ["D", "V", "N", "S", "GF"] },
+  { name: "Jersey", color: "from-[#FADA5E] to-[#E8C547]", textColor: "text-[#3D2B1F]", allergens: ["D", "V", "H", "GF"] }
 ];
 
 const SAUCES = [
-  { name: "Strawberry" },
-  { name: "Biscoff" },
-  { name: "Cherry" },
-  { name: "Nutella" },
-  { name: "Luxury White Chocolate" },
-  { name: "Classic Chocolate" },
-  { name: "Bubblegum" },
-  { name: "Raspberry" },
-  { name: "Bueno" },
-  { name: "Lemon Curd" },
-  { name: "Caramel" },
-  { name: "Pistachio Cream" },
-  { name: "Luxury Milk Chocolate" }
+  { name: "Strawberry", allergens: ["Vg", "GF"] },
+  { name: "Biscoff", allergens: ["Vg", "G"] },
+  { name: "Cherry", allergens: ["Vg", "GF"] },
+  { name: "Nutella", allergens: ["D", "V", "S", "N", "GF"] },
+  { name: "Luxury White Chocolate", allergens: ["D", "V", "S", "GF"] },
+  { name: "Classic Chocolate", allergens: ["Vg", "GF"] },
+  { name: "Bubblegum", allergens: ["Vg", "GF"] },
+  { name: "Raspberry", allergens: ["Vg", "GF"] },
+  { name: "Bueno", allergens: ["D", "V", "S", "N", "GF"] },
+  { name: "Lemon Curd", allergens: ["V", "E", "D", "GF"] },
+  { name: "Caramel", allergens: ["D", "V", "GF"] },
+  { name: "Pistachio Cream", allergens: ["D", "V", "S", "N", "GF"] },
+  { name: "Luxury Milk Chocolate", allergens: ["D", "V", "GF"] }
 ];
 
 const TOPPINGS = [
-  { name: "Cheesecake Crumb" },
-  { name: "Seasonal Sprinkles" },
-  { name: "Biscoff Crumb" },
-  { name: "Caramelised Nuts" },
-  { name: "Unicorn Poop" },
-  { name: "Mixed Nuts" },
-  { name: "Oreo Crumb" },
-  { name: "Cadbury Pieces" },
-  { name: "Honeycomb Bites" }
+  { name: "Cheesecake Crumb", allergens: ["V", "S", "G"] },
+  { name: "Seasonal Sprinkles", allergens: ["Vg", "GF"] },
+  { name: "Biscoff Crumb", allergens: ["Vg", "S", "G"] },
+  { name: "Caramelised Nuts", allergens: ["Vg", "N", "GF"] },
+  { name: "Unicorn Poop", allergens: ["GF"] },
+  { name: "Mixed Nuts", allergens: ["Vg", "N", "GF"] },
+  { name: "Oreo Crumb", allergens: ["Vg", "S", "G"] },
+  { name: "Cadbury Pieces", allergens: ["D", "V", "GF"] },
+  { name: "Honeycomb Bites", allergens: ["Vg", "GF"] }
 ];
 
 const BASE_PRICE = 29.99;
@@ -250,12 +264,34 @@ export default function YuleLogPage() {
                 <div className="mb-6">
                   <h2 className="text-[#3D2B1F] text-2xl font-bold mb-2">Choose Your Base Flavour</h2>
                   <p className="text-[#3D2B1F]/60">Pick one delicious foundation</p>
+                  <div className="flex flex-wrap gap-2 mt-3 text-xs text-[#3D2B1F]/50">
+                    <span>V = Vegetarian</span>
+                    <span>•</span>
+                    <span>Vg = Vegan</span>
+                    <span>•</span>
+                    <span>GF = Gluten Free</span>
+                    <span>•</span>
+                    <span>D = Dairy</span>
+                    <span>•</span>
+                    <span>E = Eggs</span>
+                    <span>•</span>
+                    <span>N = Nuts</span>
+                    <span>•</span>
+                    <span>S = Soy</span>
+                    <span>•</span>
+                    <span>G = Gluten</span>
+                    <span>•</span>
+                    <span>H = Honey</span>
+                    <span>•</span>
+                    <span>A = Alcohol</span>
+                  </div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {FLAVOURS.map((flavour) => (
                     <FlavourCard
                       key={flavour.name}
                       name={flavour.name}
+                      allergens={flavour.allergens}
                       isSelected={selectedFlavour === flavour.name}
                       onClick={() => setSelectedFlavour(flavour.name)}
                       color={flavour.color}
@@ -272,12 +308,30 @@ export default function YuleLogPage() {
                   <p className="text-[#3D2B1F]/60">
                     Pick up to 2 sauces to drizzle over your Yule Log 🎅
                   </p>
+                  <div className="flex flex-wrap gap-2 mt-3 text-xs text-[#3D2B1F]/50">
+                    <span>V = Vegetarian</span>
+                    <span>•</span>
+                    <span>Vg = Vegan</span>
+                    <span>•</span>
+                    <span>GF = Gluten Free</span>
+                    <span>•</span>
+                    <span>D = Dairy</span>
+                    <span>•</span>
+                    <span>E = Eggs</span>
+                    <span>•</span>
+                    <span>N = Nuts</span>
+                    <span>•</span>
+                    <span>S = Soy</span>
+                    <span>•</span>
+                    <span>G = Gluten</span>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {SAUCES.map((sauce) => (
                     <OptionToggle
                       key={sauce.name}
                       name={sauce.name}
+                      allergens={sauce.allergens}
                       isSelected={selectedSauces.includes(sauce.name)}
                       onClick={() => toggleSauce(sauce.name)}
                     />
@@ -292,12 +346,30 @@ export default function YuleLogPage() {
                   <p className="text-[#3D2B1F]/60">
                     Pick up to 2 toppings to finish your masterpiece ✨
                   </p>
+                  <div className="flex flex-wrap gap-2 mt-3 text-xs text-[#3D2B1F]/50">
+                    <span>V = Vegetarian</span>
+                    <span>•</span>
+                    <span>Vg = Vegan</span>
+                    <span>•</span>
+                    <span>GF = Gluten Free</span>
+                    <span>•</span>
+                    <span>D = Dairy</span>
+                    <span>•</span>
+                    <span>E = Eggs</span>
+                    <span>•</span>
+                    <span>N = Nuts</span>
+                    <span>•</span>
+                    <span>S = Soy</span>
+                    <span>•</span>
+                    <span>G = Gluten</span>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {TOPPINGS.map((topping) => (
                     <OptionToggle
                       key={topping.name}
                       name={topping.name}
+                      allergens={topping.allergens}
                       isSelected={selectedToppings.includes(topping.name)}
                       onClick={() => toggleTopping(topping.name)}
                     />

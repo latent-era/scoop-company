@@ -8,9 +8,10 @@ interface FlavourCardProps {
   onClick: () => void;
   color?: string;
   textColor?: string;
+  allergens?: string[];
 }
 
-export function FlavourCard({ emoji, image, name, isSelected, onClick, color, textColor = "text-[#3D2B1F]" }: FlavourCardProps) {
+export function FlavourCard({ emoji, image, name, isSelected, onClick, color, textColor = "text-[#3D2B1F]", allergens }: FlavourCardProps) {
   return (
     <button
       onClick={onClick}
@@ -36,6 +37,22 @@ export function FlavourCard({ emoji, image, name, isSelected, onClick, color, te
         <span className={`text-center ${textColor} ${isSelected ? 'font-medium' : ''}`}>
           {name}
         </span>
+        {allergens && allergens.length > 0 && (
+          <div className="flex flex-wrap gap-1 justify-center mt-1">
+            {allergens.map((allergen) => (
+              <span
+                key={allergen}
+                className={`inline-block px-2 py-0.5 rounded text-xs ${
+                  isSelected
+                    ? "bg-white/25 text-white"
+                    : "bg-white/20 text-white/90"
+                }`}
+              >
+                {allergen}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </button>
   );
