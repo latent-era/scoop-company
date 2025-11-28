@@ -75,9 +75,9 @@ export const EVENT_NIGHTS: readonly EventNight[] = [
   },
   {
     key: '21-dec',
-    displayName: '💚 Sun 21 Dec - The Grinch - 5:45PM',
+    displayName: '🏠 Sun 21 Dec - Home Alone - 5:45PM',
     value: 'Sunday 21 Dec — 5:45pm',
-    movie: 'The Grinch'
+    movie: 'Home Alone'
   },
   {
     key: '22-dec',
