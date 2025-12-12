@@ -6,7 +6,7 @@ export interface EventNight {
   displayName: string;
   value: string;
   movie: string;
-  date: string; // ISO format: '2024-12-20T17:00:00'
+  date: string; // ISO format: '2025-12-20T17:00:00'
   adultOnly?: boolean;
 }
 
@@ -17,28 +17,28 @@ export const EVENT_NIGHTS: readonly EventNight[] = [
     displayName: '🏙️ Tue 11 Nov - Home Alone 2 - 5:00PM',
     value: 'Tuesday 11 Nov — 5:00pm',
     movie: 'Home Alone 2',
-    date: '2024-11-11T17:00:00'
+    date: '2025-11-11T17:00:00'
   },
   {
     key: '18-nov',
     displayName: '💚 Tue 18 Nov - Grinch - 5:00PM',
     value: 'Tuesday 18 Nov — 5:00pm',
     movie: 'Grinch',
-    date: '2024-11-18T17:00:00'
+    date: '2025-11-18T17:00:00'
   },
   {
     key: '19-nov',
     displayName: '🎁 Wed 19 Nov - Arthur Christmas - 5:00PM',
     value: 'Wednesday 19 Nov — 5:00pm',
     movie: 'Arthur Christmas',
-    date: '2024-11-19T17:00:00'
+    date: '2025-11-19T17:00:00'
   },
   {
     key: '26-nov',
     displayName: '🎄 Wed 26 Nov - The Holiday - 6:30PM - ADULTS ONLY',
     value: 'Wednesday 26 Nov — 6:30pm arrival (6:45pm start)',
     movie: 'The Holiday',
-    date: '2024-11-26T18:30:00',
+    date: '2025-11-26T18:30:00',
     adultOnly: true
   },
   {
@@ -46,7 +46,7 @@ export const EVENT_NIGHTS: readonly EventNight[] = [
     displayName: '🧝‍♂️ Thu 27 Nov - Elf - 6:30PM - ADULTS ONLY',
     value: 'Thursday 27 Nov — 6:30pm arrival (6:45pm start)',
     movie: 'Elf',
-    date: '2024-11-27T18:30:00',
+    date: '2025-11-27T18:30:00',
     adultOnly: true
   },
   {
@@ -54,56 +54,56 @@ export const EVENT_NIGHTS: readonly EventNight[] = [
     displayName: '🎅 Fri 5 Dec - Christmas Chronicles - 5:45PM',
     value: 'Friday 5 Dec — 5:45pm',
     movie: 'Christmas Chronicles',
-    date: '2024-12-05T17:45:00'
+    date: '2025-12-05T17:45:00'
   },
   {
     key: '12-dec',
     displayName: '🧣 Fri 12 Dec - The Santa Clause - 5:45PM',
     value: 'Friday 12 Dec — 5:45pm',
     movie: 'The Santa Clause',
-    date: '2024-12-12T17:45:00'
+    date: '2025-12-12T17:45:00'
   },
   {
     key: '16-dec',
     displayName: '💚 Tue 16 Dec - Cartoon Grinch - 5:00PM',
     value: 'Tuesday 16 Dec — 5:00pm',
     movie: 'Cartoon Grinch',
-    date: '2024-12-16T17:00:00'
+    date: '2025-12-16T17:00:00'
   },
   {
     key: '18-dec',
     displayName: '🏠 Thu 18 Dec - Home Alone - 5:00PM',
     value: 'Thursday 18 Dec — 5:00pm',
     movie: 'Home Alone',
-    date: '2024-12-18T17:00:00'
+    date: '2025-12-18T17:00:00'
   },
   {
     key: '20-dec',
     displayName: '🧝‍♂️ Sat 20 Dec - Elf - 5:45PM',
     value: 'Saturday 20 Dec — 5:45pm',
     movie: 'Elf',
-    date: '2024-12-20T17:45:00'
+    date: '2025-12-20T17:45:00'
   },
   {
     key: '21-dec',
     displayName: '🏠 Sun 21 Dec - Home Alone - 5:45PM',
     value: 'Sunday 21 Dec — 5:45pm',
     movie: 'Home Alone',
-    date: '2024-12-21T17:45:00'
+    date: '2025-12-21T17:45:00'
   },
   {
     key: '22-dec',
     displayName: '🏙️ Mon 22 Dec - Home Alone 2 - 5:00PM',
     value: 'Monday 22 Dec — 5:00pm',
     movie: 'Home Alone 2',
-    date: '2024-12-22T17:00:00'
+    date: '2025-12-22T17:00:00'
   },
   {
     key: '23-dec',
     displayName: '🚂 Tue 23 Dec - Polar Express - 5:00PM',
     value: 'Tuesday 23 Dec — 5:00pm',
     movie: 'Polar Express',
-    date: '2024-12-23T17:00:00'
+    date: '2025-12-23T17:00:00'
   },
 ];
 
