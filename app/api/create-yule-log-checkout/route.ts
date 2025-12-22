@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { YULE_LOGS_SOLD_OUT } from '@/lib/inventory';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
   apiVersion: '2025-02-24.acacia',
@@ -25,6 +26,14 @@ const BASE_PRICE = 29.99;
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Yule Logs are sold out
+    if (YULE_LOGS_SOLD_OUT) {
+      return NextResponse.json(
+        { error: 'Yule Logs are sold out' },
+        { status: 400 }
+      );
+    }
+
     const { cart, customerInfo }: { cart: CartItem[]; customerInfo: CustomerInfo } = await request.json();
 
     // Validate inputs
