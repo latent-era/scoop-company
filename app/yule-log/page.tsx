@@ -8,6 +8,7 @@ import { OrderSummary, CartItem } from "@/components/yule-log/OrderSummary";
 import { OrderForm } from "@/components/yule-log/OrderForm";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Gift, ChevronDown } from "lucide-react";
+import { YULE_LOGS_SOLD_OUT } from "@/lib/inventory";
 
 const FLAVOURS = [
   { name: "Milk Chocolate", color: "from-[#8B4513] to-[#654321]", textColor: "text-white", allergens: ["Vg", "V", "H", "GF"] },
@@ -200,12 +201,21 @@ export default function YuleLogPage() {
                 Hand-crafted by Gelato by Maria — smooth, rich, and totally customisable.
               </p>
 
-              <Button
-                onClick={scrollToBuilder}
-                className="bg-[#F8AFC8] hover:bg-[#F8AFC8]/90 text-[#3D2B1F] px-8 py-6 text-lg shadow-xl"
-              >
-                Start Building 🎁
-              </Button>
+              {YULE_LOGS_SOLD_OUT ? (
+                <div className="bg-red-100 border-2 border-red-400 rounded-xl p-6 text-center">
+                  <p className="text-red-700 font-bold text-xl mb-2">Sold Out!</p>
+                  <p className="text-red-600">
+                    All Yule Logs have been snapped up for this season. Thank you for your support!
+                  </p>
+                </div>
+              ) : (
+                <Button
+                  onClick={scrollToBuilder}
+                  className="bg-[#F8AFC8] hover:bg-[#F8AFC8]/90 text-[#3D2B1F] px-8 py-6 text-lg shadow-xl"
+                >
+                  Start Building 🎁
+                </Button>
+              )}
             </div>
 
             {/* Right - Yule Log Image */}
@@ -233,7 +243,8 @@ export default function YuleLogPage() {
         </div>
       </section>
 
-      {/* Builder Section */}
+      {/* Builder Section - Hidden when sold out */}
+      {!YULE_LOGS_SOLD_OUT && (
       <section id="builder" className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8">
@@ -414,9 +425,10 @@ export default function YuleLogPage() {
           </div>
         </div>
       </section>
+      )}
 
-      {/* Order Form Section */}
-      {showForm && (
+      {/* Order Form Section - Hidden when sold out */}
+      {!YULE_LOGS_SOLD_OUT && showForm && (
         <section id="order-form" className="py-16 px-6 bg-[#F8AFC8]/5">
           <div className="max-w-7xl mx-auto">
             <OrderForm

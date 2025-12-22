@@ -114,6 +114,9 @@ export const RESERVATION_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
 // Global sold out flag - set to true to disable all ticket sales
 export const TICKETS_SOLD_OUT = false;
 
+// Global sold out flag for Yule Logs - set to true to disable all Yule Log orders
+export const YULE_LOGS_SOLD_OUT = true;
+
 // Types
 export interface InventoryData {
   kid_tickets_sold: number;
@@ -144,10 +147,23 @@ export function getNightKeyFromValue(value: string): string | null {
   return night ? night.key : null;
 }
 
-// Helper to get upcoming event nights (filters out past events)
+// Helper to get upcoming event nights (filters out past events and same-day events after 3pm)
 export function getUpcomingEventNights(): EventNight[] {
   const now = new Date();
-  return EVENT_NIGHTS.filter(night => new Date(night.date) > now);
+  return EVENT_NIGHTS.filter(night => {
+    const eventDate = new Date(night.date);
+
+    // If event has already started, exclude it
+    if (eventDate <= now) return false;
+
+    // If same day and past 3pm, exclude it (to avoid last-minute booking chaos)
+    const isSameDay = eventDate.toDateString() === now.toDateString();
+    const isPast3pm = now.getHours() >= 15;
+
+    if (isSameDay && isPast3pm) return false;
+
+    return true;
+  });
 }
 
 // Helper to get night display info from key
@@ -236,6 +252,18 @@ export async function reserveTickets(
   // Check if this is an adult-only event
   const nightInfo = getNightFromKey(nightKey);
   const isAdultOnly = nightInfo?.adultOnly === true;
+
+  // Check if booking is being made too late (same day after 3pm)
+  if (nightInfo) {
+    const now = new Date();
+    const eventDate = new Date(nightInfo.date);
+    const isSameDay = eventDate.toDateString() === now.toDateString();
+    const isPast3pm = now.getHours() >= 15;
+
+    if (isSameDay && isPast3pm) {
+      return { success: false, error: 'Bookings for same-day films close at 3pm' };
+    }
+  }
 
   // Validate inputs
   if (!isAdultOnly && kidTickets < 1) {
