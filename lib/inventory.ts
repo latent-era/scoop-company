@@ -105,6 +105,13 @@ export const EVENT_NIGHTS: readonly EventNight[] = [
     movie: 'Polar Express',
     date: '2025-12-23T17:00:00'
   },
+  {
+    key: '2-jan',
+    displayName: '⭐ Fri 2 Jan - FAN FAVOURITE - (SEE IG TO VOTE) - 5:20PM',
+    value: 'Friday 2 Jan — 5:00pm arrival (5:20pm start)',
+    movie: 'FAN FAVOURITE - (SEE IG TO VOTE)',
+    date: '2025-01-02T17:00:00'
+  },
 ];
 
 export const MAX_KID_TICKETS = 20;
