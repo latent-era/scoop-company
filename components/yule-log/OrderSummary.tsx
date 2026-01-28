@@ -4,6 +4,8 @@ import { Minus, Plus, Pencil, Trash2, ShoppingCart } from "lucide-react";
 
 export interface CartItem {
   id: string;
+  size: "small" | "large";
+  buttercream: "small" | "full" | "none";
   flavour: string;
   sauces: string[];
   toppings: string[];
@@ -18,7 +20,41 @@ interface OrderSummaryProps {
   onCheckout: () => void;
 }
 
-const BASE_PRICE = 29.99;
+// Pricing constants
+const SIZE_PRICES = {
+  small: 27.99,
+  large: 34.99
+};
+
+const BUTTERCREAM_PRICES = {
+  small: 0,
+  full: 2.00,
+  none: 0
+};
+
+// Helper to get flavour display name
+const getFlavourName = (flavourId: string) => {
+  const names: { [key: string]: string } = {
+    'vanilla': 'Classic Vanilla',
+    'strawberry': 'Strawberry Swirl',
+    'pistachio': 'Pistachio Dream',
+    'chocolate': 'Belgian Chocolate',
+    'mango': 'Mango Sorbet',
+    'salted-caramel': 'Salted Caramel',
+    'hazelnut': 'Roasted Hazelnut',
+    'lemon': 'Zesty Lemon',
+    'mint': 'Mint Choc Chip',
+    'raspberry': 'Raspberry Ripple',
+  };
+  return names[flavourId] || flavourId;
+};
+
+// Calculate price for a single item (before quantity)
+const calculateItemPrice = (item: CartItem) => {
+  const sizePrice = SIZE_PRICES[item.size];
+  const buttercreamPrice = BUTTERCREAM_PRICES[item.buttercream];
+  return sizePrice + buttercreamPrice;
+};
 
 export function OrderSummary({
   cart,
@@ -28,7 +64,7 @@ export function OrderSummary({
   onCheckout
 }: OrderSummaryProps) {
   const cartTotal = cart.reduce((total, item) => {
-    const itemPrice = BASE_PRICE * item.quantity;
+    const itemPrice = calculateItemPrice(item) * item.quantity;
     return total + itemPrice;
   }, 0);
 
@@ -43,16 +79,17 @@ export function OrderSummary({
 
       {isCartEmpty ? (
         <div className="text-center py-8">
-          <div className="text-5xl mb-3">🎄</div>
+          <div className="text-5xl mb-3">🎂</div>
           <p className="text-[#3D2B1F]/60 mb-2">Your cart is empty</p>
-          <p className="text-sm text-[#3D2B1F]/40">Build your Yule Log and add it to cart!</p>
+          <p className="text-sm text-[#3D2B1F]/40">Build your Birthday Cake and add it to cart!</p>
         </div>
       ) : (
         <div className="space-y-4">
           {/* Cart Items */}
           <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
             {cart.map((item, index) => {
-              const itemPrice = BASE_PRICE * item.quantity;
+              const unitPrice = calculateItemPrice(item);
+              const itemTotal = unitPrice * item.quantity;
 
               return (
                 <div
@@ -63,9 +100,9 @@ export function OrderSummary({
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
                       <p className="text-[#3D2B1F] font-medium">
-                        Yule Log #{index + 1}
+                        Birthday Cake #{index + 1}
                       </p>
-                      <p className="text-sm text-[#3D2B1F]/60">{item.flavour}</p>
+                      <p className="text-sm text-[#3D2B1F]/60">{getFlavourName(item.flavour)}</p>
                     </div>
                     <div className="flex gap-1">
                       <Button
@@ -88,16 +125,16 @@ export function OrderSummary({
                   </div>
 
                   {/* Item Details */}
-                  {(item.sauces.length > 0 || item.toppings.length > 0) && (
-                    <div className="text-xs text-[#3D2B1F]/60 mb-3 space-y-1">
-                      {item.sauces.length > 0 && (
-                        <p>Sauces: {item.sauces.join(", ")}</p>
-                      )}
-                      {item.toppings.length > 0 && (
-                        <p>Toppings: {item.toppings.join(", ")}</p>
-                      )}
-                    </div>
-                  )}
+                  <div className="text-xs text-[#3D2B1F]/60 mb-3 space-y-1">
+                    <p>Size: {item.size === "small" ? "Small (6-8)" : "Large (10-12)"}</p>
+                    <p>Buttercream: {item.buttercream === "small" ? "Small Decorative" : item.buttercream === "full" ? "Full Coverage" : "None"}</p>
+                    {item.sauces.length > 0 && (
+                      <p>Sauces: {item.sauces.join(", ")}</p>
+                    )}
+                    {item.toppings.length > 0 && (
+                      <p>Toppings: {item.toppings.join(", ")}</p>
+                    )}
+                  </div>
 
                   {/* Quantity & Price */}
                   <div className="flex items-center justify-between">
@@ -123,7 +160,7 @@ export function OrderSummary({
                       </Button>
                     </div>
                     <span className="text-[#2E4E3F] font-semibold">
-                      £{itemPrice.toFixed(2)}
+                      £{itemTotal.toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -146,7 +183,7 @@ export function OrderSummary({
               disabled={isCartEmpty}
               className="w-full bg-[#F8AFC8] hover:bg-[#F8AFC8]/90 text-[#3D2B1F] py-6 rounded-xl shadow-lg font-semibold"
             >
-              Proceed to Checkout 🎄
+              Proceed to Checkout 🎂
             </Button>
 
             <p className="text-xs text-center text-[#3D2B1F]/50 mt-2">

@@ -24,6 +24,24 @@ export interface FormData {
   deliveryOption: "collect" | "delivery";
 }
 
+// Pricing constants (same as in OrderSummary)
+const SIZE_PRICES = {
+  small: 27.99,
+  large: 34.99
+};
+
+const BUTTERCREAM_PRICES = {
+  small: 0,
+  full: 2.00,
+  none: 0
+};
+
+const calculateItemPrice = (item: CartItem) => {
+  const sizePrice = SIZE_PRICES[item.size];
+  const buttercreamPrice = BUTTERCREAM_PRICES[item.buttercream];
+  return sizePrice + buttercreamPrice;
+};
+
 export function OrderForm({ cart, onBack }: OrderFormProps) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -40,9 +58,10 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
   const minDate = new Date();
   minDate.setDate(minDate.getDate() + 3); // 72 hours from now
 
-  // Christmas Eve date
-  const christmasEve = new Date(2025, 11, 24); // December 24, 2025
-  const isChristmasEveAvailable = christmasEve >= minDate;
+  // Calculate cart total for Meta Pixel tracking
+  const cartTotal = cart.reduce((total, item) => {
+    return total + calculateItemPrice(item) * item.quantity;
+  }, 0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,15 +74,15 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'InitiateCheckout', {
         currency: 'GBP',
-        value: cart.reduce((sum, item) => sum + (29.99 * item.quantity), 0),
+        value: cartTotal,
         content_type: 'product',
-        content_name: 'Gelato Yule Log',
+        content_name: 'Gelato Birthday Cake',
         num_items: cart.reduce((sum, item) => sum + item.quantity, 0),
       });
     }
 
     try {
-      const response = await fetch("/api/create-yule-log-checkout", {
+      const response = await fetch("/api/create-birthday-cake-checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -96,9 +115,6 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
       formData.collectionDate !== null
     );
   };
-
-  const isChristmasEveSelected = formData.collectionDate &&
-    formData.collectionDate.getTime() === christmasEve.getTime();
 
   return (
     <Card className="p-8 bg-white border-2 border-[#E3C565]/30 shadow-xl max-w-2xl mx-auto">
@@ -173,7 +189,7 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {formData.collectionDate ? (
-                  isChristmasEveSelected ? "Christmas Eve 🎄" : format(formData.collectionDate, "PPP")
+                  format(formData.collectionDate, "PPP")
                 ) : (
                   <span className="text-[#3D2B1F]/50">Pick a date</span>
                 )}
@@ -184,7 +200,7 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
                 mode="single"
                 selected={formData.collectionDate || undefined}
                 onSelect={(date) => {
-                  setFormData({ ...formData, collectionDate: date || null, deliveryOption: "collect" });
+                  setFormData({ ...formData, collectionDate: date || null });
                   setCalendarOpen(false);
                 }}
                 disabled={(date) => date < minDate}
@@ -203,11 +219,11 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
         {/* Collection Option */}
         <div className="space-y-3">
           <Label className="text-[#3D2B1F]">Collection Option</Label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             <button
               type="button"
               onClick={() => setFormData({ ...formData, deliveryOption: "collect" })}
-              className={`p-4 rounded-xl border-2 transition-all ${
+              className={`p-4 rounded-xl border-2 transition-all text-left ${
                 formData.deliveryOption === "collect"
                   ? "border-[#2E4E3F] bg-[#2E4E3F]/5"
                   : "border-[#E3C565]/20 hover:border-[#E3C565]/50"
@@ -215,27 +231,13 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
             >
               🏪 Collect In-Store
             </button>
-            <button
-              type="button"
-              onClick={() => setFormData({ ...formData, deliveryOption: "delivery", collectionDate: christmasEve })}
-              className={`p-4 rounded-xl border-2 transition-all ${
-                formData.deliveryOption === "delivery"
-                  ? "border-[#2E4E3F] bg-[#2E4E3F]/5"
-                  : "border-[#E3C565]/20 hover:border-[#E3C565]/50"
-              }`}
-              disabled={!isChristmasEveAvailable}
-            >
-              🎄 Christmas Eve Collection
-            </button>
           </div>
-          {formData.deliveryOption === "delivery" && (
-            <div className="mt-3 p-3 bg-[#E3C565]/10 rounded-lg border border-[#E3C565]/30">
-              <p className="text-sm text-[#3D2B1F]">
-                <Info className="w-4 h-4 inline mr-1" />
-                Collection slots are limited — we&apos;ll confirm your time window via email.
-              </p>
-            </div>
-          )}
+          <div className="p-3 bg-[#E3C565]/10 rounded-lg border border-[#E3C565]/30">
+            <p className="text-sm text-[#3D2B1F]">
+              <Info className="w-4 h-4 inline mr-1" />
+              We&apos;ll confirm your collection time window via email.
+            </p>
+          </div>
         </div>
 
         {/* Buttons */}
@@ -254,7 +256,7 @@ export function OrderForm({ cart, onBack }: OrderFormProps) {
             disabled={!isFormValid() || isSubmitting}
             className="flex-1 bg-[#2E4E3F] hover:bg-[#2E4E3F]/90 text-white"
           >
-            {isSubmitting ? "Processing..." : "Proceed to Payment 🎁"}
+            {isSubmitting ? "Processing..." : "Proceed to Payment 🎂"}
           </Button>
         </div>
       </form>

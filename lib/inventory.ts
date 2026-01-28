@@ -134,6 +134,9 @@ export const BOOKING_COMING_SOON = false;
 // Global sold out flag for Yule Logs - set to true to disable all Yule Log orders
 export const YULE_LOGS_SOLD_OUT = true;
 
+// Global sold out flag for Birthday Cakes - set to true to disable all Birthday Cake orders
+export const BIRTHDAY_CAKES_SOLD_OUT = false;
+
 // Types
 export interface InventoryData {
   kid_tickets_sold: number;

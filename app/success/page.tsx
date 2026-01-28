@@ -21,6 +21,7 @@ function SuccessContent() {
   const [loading, setLoading] = useState(true);
 
   const isYuleLog = orderType === 'yule-log';
+  const isBirthdayCake = orderType === 'birthday-cake';
 
   useEffect(() => {
     if (sessionId) {
@@ -31,24 +32,24 @@ function SuccessContent() {
         if (typeof window !== 'undefined' && window.fbq) {
           window.fbq('track', 'Purchase', {
             currency: 'GBP',
-            value: isYuleLog ? 29.99 : 12,
+            value: isBirthdayCake ? 27.99 : isYuleLog ? 29.99 : 12,
             content_type: 'product',
-            content_name: isYuleLog ? 'Gelato Yule Log' : 'Movie Night Tickets',
+            content_name: isBirthdayCake ? 'Gelato Birthday Cake' : isYuleLog ? 'Gelato Yule Log' : 'Movie Night Tickets',
           });
         }
       }, 500);
     } else {
       setLoading(false);
     }
-  }, [sessionId, isYuleLog]);
+  }, [sessionId, isYuleLog, isBirthdayCake]);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #FFE8F0 0%, #FFF5F0 100%)' }}>
         <div className="text-center">
-          <div className="text-6xl mb-6 animate-bounce">{isYuleLog ? '🎁' : '🎟️'}</div>
+          <div className="text-6xl mb-6 animate-bounce">{isBirthdayCake ? '🎂' : isYuleLog ? '🎁' : '🎟️'}</div>
           <p className="text-xl" style={{ color: '#717182' }}>
-            {isYuleLog ? 'Processing your order...' : 'Loading your tickets...'}
+            {isBirthdayCake || isYuleLog ? 'Processing your order...' : 'Loading your tickets...'}
           </p>
         </div>
       </div>
@@ -90,10 +91,10 @@ function SuccessContent() {
             {/* Success Message */}
             <div className="space-y-3">
               <h1 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#030213' }}>
-                {isYuleLog ? 'Order Confirmed! 🎁' : "You're All Set! 🎉"}
+                {isBirthdayCake ? 'Order Confirmed! 🎂' : isYuleLog ? 'Order Confirmed! 🎁' : "You're All Set! 🎉"}
               </h1>
               <p className="text-xl" style={{ color: '#717182' }}>
-                {isYuleLog ? 'Your Gelato Yule Log order has been confirmed' : 'Your tickets have been confirmed'}
+                {isBirthdayCake ? 'Your Gelato Birthday Cake order has been confirmed' : isYuleLog ? 'Your Gelato Yule Log order has been confirmed' : 'Your tickets have been confirmed'}
               </p>
             </div>
 
@@ -106,7 +107,22 @@ function SuccessContent() {
                 </p>
               </div>
               <div className="space-y-2 text-left max-w-md mx-auto" style={{ color: '#030213' }}>
-                {isYuleLog ? (
+                {isBirthdayCake ? (
+                  <>
+                    <p className="flex items-start gap-2">
+                      <span className="text-xl">📧</span>
+                      <span>Check your email for your order confirmation and collection details</span>
+                    </p>
+                    <p className="flex items-start gap-2">
+                      <span className="text-xl">📅</span>
+                      <span>We'll send you a reminder the day before collection</span>
+                    </p>
+                    <p className="flex items-start gap-2">
+                      <span className="text-xl">🎂</span>
+                      <span>Collect your handcrafted Birthday Cake on your selected date!</span>
+                    </p>
+                  </>
+                ) : isYuleLog ? (
                   <>
                     <p className="flex items-start gap-2">
                       <span className="text-xl">📧</span>
@@ -143,7 +159,11 @@ function SuccessContent() {
             {/* Details Note */}
             <div className="p-4 rounded-xl" style={{ background: 'rgba(196, 30, 58, 0.1)', border: '1px solid rgba(196, 30, 58, 0.3)' }}>
               <p className="text-sm" style={{ color: '#030213' }}>
-                {isYuleLog ? (
+                {isBirthdayCake ? (
+                  <>
+                    <strong>Important:</strong> Please allow 72 hours for preparation. Your Birthday Cake will be freshly made by Gelato by Maria. 🎉
+                  </>
+                ) : isYuleLog ? (
                   <>
                     <strong>Important:</strong> Please allow 72 hours for preparation. Your Yule Log will be freshly made by Gelato by Maria. 🎅
                   </>

@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
         // Check if this is a yule log order or ticket order
         const productType = metadata.product_type;
 
-        if (productType === 'yule_log') {
-          // Handle yule log order - no inventory tracking needed
-          console.log('Yule Log order confirmed:', {
+        if (productType === 'birthday_cake') {
+          // Handle birthday cake order - no inventory tracking needed
+          console.log('Birthday Cake order confirmed:', {
             sessionId: session.id,
             customerName: metadata.customer_name,
             customerEmail: session.customer_email,
@@ -63,6 +63,17 @@ export async function POST(request: NextRequest) {
           // - Store the order in a database
           // - Send a confirmation email
           // - Notify the kitchen/staff
+        } else if (productType === 'yule_log') {
+          // Legacy: Handle yule log order - no inventory tracking needed
+          console.log('Yule Log order confirmed:', {
+            sessionId: session.id,
+            customerName: metadata.customer_name,
+            customerEmail: session.customer_email,
+            collectionDate: metadata.collection_date_formatted,
+            deliveryOption: metadata.delivery_option,
+            orderSummary: metadata.order_summary,
+            totalAmount: metadata.total_amount
+          });
         } else {
           // Handle ticket order with inventory
           const { night_key, kid_tickets, adult_tickets, temp_session_id } = metadata;
