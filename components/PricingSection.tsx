@@ -4,34 +4,6 @@ import { Card } from "./ui/card";
 import { Check } from "lucide-react";
 import { TICKETS_SOLD_OUT } from "@/lib/inventory";
 
-const tickets = [
-  {
-    type: "👧 Kids",
-    price: "£12",
-    includes: "Any dessert + any drink",
-    features: [
-      "Full dessert menu access",
-      "All drinks included",
-      "Perfect for children",
-      "Sweet movie experience"
-    ],
-    color: "#F8AFC8"
-  },
-  {
-    type: "🧑 Adults",
-    price: "£12",
-    includes: "Any dessert + any drink",
-    features: [
-      "Full dessert menu access",
-      "All drinks included",
-      "Complete experience",
-      "Best value option"
-    ],
-    color: "#F38DB5",
-    popular: true
-  }
-];
-
 export function PricingSection() {
   const scrollToTickets = () => {
     document.getElementById('tickets')?.scrollIntoView({ behavior: 'smooth' });
@@ -43,69 +15,74 @@ export function PricingSection() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
-              Pricing & Details
+              💕 How It Works
             </h2>
             <p className="text-xl" style={{ color: '#717182' }}>
-              Choose the perfect ticket for your night
+              Simple booking, sweet experience
             </p>
           </div>
 
-          {/* Pricing Cards */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
-            {tickets.map((ticket, index) => (
-              <Card
-                key={index}
-                className={`relative p-6 bg-white border-2 transition-all ${
-                  TICKETS_SOLD_OUT ? 'opacity-75 cursor-default' : 'hover:shadow-2xl cursor-pointer'
-                } ${
-                  ticket.popular ? 'border-[#F38DB5] shadow-xl scale-105' : 'border-transparent hover:border-[#F8AFC8]'
-                }`}
-                onClick={TICKETS_SOLD_OUT ? undefined : scrollToTickets}
-              >
-                {TICKETS_SOLD_OUT && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 px-4 py-1 rounded-full text-sm z-20" style={{ background: '#1F1B24', color: 'white', fontWeight: 700 }}>
-                    SOLD OUT
+          {/* Single Pricing Card */}
+          <div className="flex justify-center mb-12">
+            <Card
+              className={`relative p-8 bg-white border-2 transition-all max-w-md w-full ${
+                TICKETS_SOLD_OUT ? 'opacity-75 cursor-default' : 'hover:shadow-2xl cursor-pointer'
+              } border-[#D4526E] shadow-xl`}
+              onClick={TICKETS_SOLD_OUT ? undefined : scrollToTickets}
+            >
+              {TICKETS_SOLD_OUT && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 px-4 py-1 rounded-full text-sm z-20" style={{ background: '#1F1B24', color: 'white', fontWeight: 700 }}>
+                  SOLD OUT
+                </div>
+              )}
+              {!TICKETS_SOLD_OUT && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 px-4 py-1 rounded-full text-sm" style={{ background: '#D4526E', color: 'white', fontWeight: 600 }}>
+                  🔞 Adults Only (18+)
+                </div>
+              )}
+
+              <div className="text-center space-y-4">
+                <div className="text-4xl">🎟️</div>
+
+                <h3 className="text-xl" style={{ fontWeight: 700, color: '#1F1B24' }}>
+                  Adult Ticket
+                </h3>
+
+                <div className="py-4">
+                  <div className="text-5xl" style={{ fontWeight: 800, color: '#D4526E' }}>
+                    £12
                   </div>
-                )}
-                {!TICKETS_SOLD_OUT && ticket.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 px-4 py-1 rounded-full text-sm" style={{ background: '#F38DB5', color: 'white', fontWeight: 600 }}>
-                    Most Popular
+                  <p className="mt-2" style={{ color: '#717182' }}>
+                    per person
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-lg" style={{ background: '#D4526E15' }}>
+                  <p style={{ fontWeight: 600, color: '#1F1B24' }}>
+                    Any dessert + any drink
+                  </p>
+                </div>
+
+                <div className="pt-4 space-y-3 text-left">
+                  <div className="flex items-start gap-2">
+                    <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#D4526E' }} />
+                    <span style={{ color: '#717182' }}>Full dessert menu access</span>
                   </div>
-                )}
-
-                <div className="text-center space-y-4">
-                  <div className="text-3xl">{ticket.type.split(' ')[0]}</div>
-
-                  <h3 className="text-xl" style={{ fontWeight: 700, color: '#1F1B24' }}>
-                    {ticket.type}
-                  </h3>
-
-                  <div className="py-4">
-                    <div className="text-5xl" style={{ fontWeight: 800, color: ticket.color }}>
-                      {ticket.price}
-                    </div>
-                    <p className="mt-2" style={{ color: '#717182' }}>
-                      per person
-                    </p>
+                  <div className="flex items-start gap-2">
+                    <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#D4526E' }} />
+                    <span style={{ color: '#717182' }}>All drinks included</span>
                   </div>
-
-                  <div className="p-3 rounded-lg" style={{ background: `${ticket.color}15` }}>
-                    <p style={{ fontWeight: 600, color: '#1F1B24' }}>
-                      {ticket.includes}
-                    </p>
+                  <div className="flex items-start gap-2">
+                    <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#D4526E' }} />
+                    <span style={{ color: '#717182' }}>Romantic movie screening</span>
                   </div>
-
-                  <div className="pt-4 space-y-3 text-left">
-                    {ticket.features.map((feature, fIndex) => (
-                      <div key={fIndex} className="flex items-start gap-2">
-                        <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: ticket.color }} />
-                        <span style={{ color: '#717182' }}>{feature}</span>
-                      </div>
-                    ))}
+                  <div className="flex items-start gap-2">
+                    <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#D4526E' }} />
+                    <span style={{ color: '#717182' }}>Perfect date night experience</span>
                   </div>
                 </div>
-              </Card>
-            ))}
+              </div>
+            </Card>
           </div>
 
           {/* Event Details */}
@@ -113,19 +90,22 @@ export function PricingSection() {
             <Card className="p-6 bg-white/80 backdrop-blur-sm text-center">
               <div className="text-3xl mb-2">🗓</div>
               <h4 style={{ fontWeight: 700, color: '#1F1B24' }}>When</h4>
-              <p style={{ color: '#717182' }}>11th Nov – 23rd Dec</p>
+              <p style={{ color: '#717182' }}>Valentine's Weekend</p>
+              <p className="text-sm" style={{ color: '#717182' }}>Fri 13th – Sun 15th Feb</p>
             </Card>
 
             <Card className="p-6 bg-white/80 backdrop-blur-sm text-center">
               <div className="text-3xl mb-2">📍</div>
               <h4 style={{ fontWeight: 700, color: '#1F1B24' }}>Where</h4>
               <p style={{ color: '#717182' }}>The Scoop Company, Warlingham</p>
+              <p className="text-sm" style={{ color: '#717182' }}>Free parking nearby</p>
             </Card>
 
             <Card className="p-6 bg-white/80 backdrop-blur-sm text-center">
-              <div className="text-3xl mb-2">🕕</div>
+              <div className="text-3xl mb-2">🕖</div>
               <h4 style={{ fontWeight: 700, color: '#1F1B24' }}>Time</h4>
-              <p style={{ color: '#717182' }}>Film starts 15 minutes after ticket time</p>
+              <p style={{ color: '#717182' }}>Evening screenings</p>
+              <p className="text-sm" style={{ color: '#717182' }}>Please arrive 15 mins early</p>
             </Card>
           </div>
         </div>

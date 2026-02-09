@@ -6,7 +6,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Card } from "./ui/card";
-import { Ticket, Sparkles, Minus, Plus, AlertCircle } from "lucide-react";
+import { Ticket, Sparkles, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { TICKETS_SOLD_OUT, BOOKING_COMING_SOON } from "@/lib/inventory";
 
@@ -20,8 +20,7 @@ interface Availability {
   adultOnly?: boolean;
 }
 
-const MAX_KIDS = 20;
-const MAX_ADULTS = 15;
+const MAX_ADULTS = 30;
 
 // Declare fbq for TypeScript
 declare global {
@@ -83,52 +82,21 @@ export function TicketFormSection() {
   }, [formData.date, availabilities]);
 
   const calculateTotal = () => {
-    const kids = formData.kidTickets * 12;
-    const adults = formData.adultTickets * 12;
-    return kids + adults;
+    return formData.adultTickets * 12;
   };
 
   const getTotalTickets = () => {
-    return formData.kidTickets + formData.adultTickets;
-  };
-
-  const getRemainingKids = () => {
-    return selectedNightAvailability ? selectedNightAvailability.kidTicketsRemaining : MAX_KIDS;
+    return formData.adultTickets;
   };
 
   const getRemainingAdults = () => {
     return selectedNightAvailability ? selectedNightAvailability.adultTicketsRemaining : MAX_ADULTS;
   };
 
-  const handleKidsChange = (increment: boolean) => {
-    const remaining = getRemainingKids();
-    const isAdultOnly = selectedNightAvailability?.adultOnly === true;
-
-    if (increment && formData.kidTickets < Math.min(MAX_KIDS, remaining)) {
-      setFormData({ ...formData, kidTickets: formData.kidTickets + 1 });
-    } else if (!increment && formData.kidTickets > 0) {
-      const newKids = formData.kidTickets - 1;
-      // If removing last kid ticket, reset adult tickets to 0 (but not for adult-only events)
-      if (newKids === 0 && !isAdultOnly) {
-        setFormData({ ...formData, kidTickets: 0, adultTickets: 0 });
-        toast.error("Adult tickets removed - at least one child ticket is required");
-      } else {
-        setFormData({ ...formData, kidTickets: newKids });
-      }
-    }
-  };
-
   const handleAdultChange = (increment: boolean) => {
-    const isAdultOnly = selectedNightAvailability?.adultOnly === true;
-
-    if (!isAdultOnly && formData.kidTickets === 0) {
-      toast.error("Please add at least one child ticket to book adult seats");
-      return;
-    }
-
     const remaining = getRemainingAdults();
 
-    if (increment && formData.adultTickets < Math.min(MAX_ADULTS, remaining)) {
+    if (increment && formData.adultTickets < Math.min(8, remaining)) {
       setFormData({ ...formData, adultTickets: formData.adultTickets + 1 });
     } else if (!increment && formData.adultTickets > 0) {
       setFormData({ ...formData, adultTickets: formData.adultTickets - 1 });
@@ -148,15 +116,8 @@ export function TicketFormSection() {
       return;
     }
 
-    const isAdultOnly = selectedNightAvailability?.adultOnly === true;
-
-    if (!isAdultOnly && formData.kidTickets < 1) {
-      toast.error("You must book at least 1 kid ticket");
-      return;
-    }
-
-    if (isAdultOnly && formData.adultTickets < 1) {
-      toast.error("You must book at least 1 adult ticket for this adults-only event");
+    if (formData.adultTickets < 1) {
+      toast.error("You must book at least 1 adult ticket");
       return;
     }
 
@@ -168,7 +129,7 @@ export function TicketFormSection() {
         currency: 'GBP',
         value: calculateTotal(),
         content_type: 'product',
-        content_name: 'Movie Night Tickets',
+        content_name: 'Valentine\'s Movie Night Tickets',
         num_items: getTotalTickets(),
       });
     }
@@ -184,7 +145,7 @@ export function TicketFormSection() {
           email: formData.email,
           phone: formData.phone,
           night: formData.date,
-          kidTickets: formData.kidTickets,
+          kidTickets: 0,
           adultTickets: formData.adultTickets
         }),
       });
@@ -212,18 +173,18 @@ export function TicketFormSection() {
   if (BOOKING_COMING_SOON) {
     return (
       <section id="tickets" className="py-20 relative overflow-hidden" style={{ background: '#FFE8F0' }}>
-        {/* Decorative background with candy and cone icons */}
+        {/* Decorative background with Valentine's icons */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute top-20 left-10 text-9xl">🎄</div>
+          <div className="absolute top-20 left-10 text-9xl">💕</div>
           <div className="absolute bottom-20 right-20 text-9xl">🍦</div>
-          <div className="absolute top-1/2 left-1/4 text-7xl">❄️</div>
-          <div className="absolute top-32 right-16 text-6xl">🎁</div>
+          <div className="absolute top-1/2 left-1/4 text-7xl">💖</div>
+          <div className="absolute top-32 right-16 text-6xl">🌹</div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12 space-y-4">
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-[#F8AFC8] text-[#1F1B24] rounded-full">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4526E] text-white rounded-full">
                 <Sparkles className="w-5 h-5" />
                 <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>COMING SOON</span>
               </div>
@@ -236,20 +197,20 @@ export function TicketFormSection() {
               </p>
             </div>
 
-            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#F8AFC8]/30">
+            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#D4526E]/30">
               <div className="text-center space-y-6">
-                <div className="text-6xl mb-4">🎬</div>
+                <div className="text-6xl mb-4">💘</div>
 
                 <h3 className="text-2xl md:text-3xl" style={{ fontWeight: 700, color: '#1F1B24' }}>
                   Stay Tuned!
                 </h3>
 
                 <p className="text-lg" style={{ color: '#717182', lineHeight: '1.6' }}>
-                  We're busy planning new movie nights for you. Follow us on social media to be the first to know when tickets go on sale!
+                  We're busy planning Valentine's Movie Nights for you. Follow us on social media to be the first to know when tickets go on sale!
                 </p>
 
-                <div className="p-5 rounded-xl mt-6" style={{ background: '#F8AFC8', border: '2px solid #F38DB5' }}>
-                  <p style={{ fontWeight: 600, color: '#1F1B24' }}>
+                <div className="p-5 rounded-xl mt-6" style={{ background: '#D4526E', border: '2px solid #F38DB5' }}>
+                  <p style={{ fontWeight: 600, color: 'white' }}>
                     New dates will be announced soon!
                   </p>
                 </div>
@@ -265,12 +226,12 @@ export function TicketFormSection() {
   if (TICKETS_SOLD_OUT) {
     return (
       <section id="tickets" className="py-20 relative overflow-hidden" style={{ background: '#FFE8F0' }}>
-        {/* Decorative background with candy and cone icons */}
+        {/* Decorative background with Valentine's icons */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute top-20 left-10 text-9xl">🎄</div>
+          <div className="absolute top-20 left-10 text-9xl">💕</div>
           <div className="absolute bottom-20 right-20 text-9xl">🍦</div>
-          <div className="absolute top-1/2 left-1/4 text-7xl">❄️</div>
-          <div className="absolute top-32 right-16 text-6xl">🎁</div>
+          <div className="absolute top-1/2 left-1/4 text-7xl">💖</div>
+          <div className="absolute top-32 right-16 text-6xl">🌹</div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -282,14 +243,14 @@ export function TicketFormSection() {
               </div>
 
               <h2 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
-                Thank You! 🎉
+                Thank You! 💘
               </h2>
               <p className="text-xl" style={{ color: '#717182' }}>
-                We've reached full capacity for both nights
+                We've reached full capacity for all nights
               </p>
             </div>
 
-            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#F8AFC8]/30">
+            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#D4526E]/30">
               <div className="text-center space-y-6">
                 <div className="text-6xl mb-4">🍦</div>
 
@@ -299,12 +260,12 @@ export function TicketFormSection() {
 
                 <p className="text-lg" style={{ color: '#717182', lineHeight: '1.6' }}>
                   We're overwhelmed by the amazing response! Thank you to everyone who secured their tickets.
-                  Both nights are now completely sold out.
+                  All Valentine's nights are now completely sold out.
                 </p>
 
-                <div className="p-5 rounded-xl mt-6" style={{ background: '#F8AFC8', border: '2px solid #F38DB5' }}>
-                  <p style={{ fontWeight: 600, color: '#1F1B24' }}>
-                    See you at Scoop Company! 🎄🎁
+                <div className="p-5 rounded-xl mt-6" style={{ background: '#D4526E', border: '2px solid #F38DB5' }}>
+                  <p style={{ fontWeight: 600, color: 'white' }}>
+                    See you at The Scoop Company! 💕🌹
                   </p>
                 </div>
 
@@ -322,19 +283,19 @@ export function TicketFormSection() {
 
   return (
     <section id="tickets" className="py-20 relative overflow-hidden" style={{ background: '#FFE8F0' }}>
-      {/* Decorative background with candy and cone icons */}
+      {/* Decorative background with Valentine's icons */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-20 left-10 text-9xl">🎄</div>
+        <div className="absolute top-20 left-10 text-9xl">💕</div>
         <div className="absolute bottom-20 right-20 text-9xl">🍦</div>
-        <div className="absolute top-1/2 left-1/4 text-7xl">❄️</div>
-        <div className="absolute top-32 right-16 text-6xl">🎁</div>
+        <div className="absolute top-1/2 left-1/4 text-7xl">💖</div>
+        <div className="absolute top-32 right-16 text-6xl">🌹</div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12 space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full">
-              <Ticket className="w-5 h-5" style={{ color: '#F8AFC8' }} />
+              <Ticket className="w-5 h-5" style={{ color: '#D4526E' }} />
               <span style={{ fontWeight: 600, color: '#1F1B24' }}>Limited Availability</span>
             </div>
 
@@ -346,7 +307,7 @@ export function TicketFormSection() {
             </p>
           </div>
 
-          <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#F8AFC8]/30">
+          <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#D4526E]/30">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name */}
               <div className="space-y-2">
@@ -357,7 +318,7 @@ export function TicketFormSection() {
                   placeholder="Your name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="h-12 border-2 focus:border-[#F8AFC8]"
+                  className="h-12 border-2 focus:border-[#D4526E]"
                   disabled={loading}
                 />
               </div>
@@ -371,7 +332,7 @@ export function TicketFormSection() {
                   placeholder="your@email.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-12 border-2 focus:border-[#F8AFC8]"
+                  className="h-12 border-2 focus:border-[#D4526E]"
                   disabled={loading}
                 />
               </div>
@@ -385,21 +346,21 @@ export function TicketFormSection() {
                   placeholder="07XXX XXXXXX"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="h-12 border-2 focus:border-[#F8AFC8]"
+                  className="h-12 border-2 focus:border-[#D4526E]"
                   disabled={loading}
                 />
               </div>
 
               {/* Preferred Night */}
               <div className="space-y-2">
-                <Label htmlFor="date">Preferred Night</Label>
+                <Label htmlFor="date">Choose Your Valentine's Night</Label>
                 <Select
                   value={formData.date}
                   onValueChange={(value) => setFormData({ ...formData, date: value })}
                   disabled={loading || loadingAvailability}
                 >
                   <SelectTrigger className="h-12 border-2">
-                    <SelectValue placeholder={loadingAvailability ? "Loading availability..." : "Choose a date"} />
+                    <SelectValue placeholder={loadingAvailability ? "Loading availability..." : "Choose your movie night"} />
                   </SelectTrigger>
                   <SelectContent>
                     {Array.isArray(availabilities) && availabilities.length > 0 ? (
@@ -411,8 +372,8 @@ export function TicketFormSection() {
                         >
                           {availability.displayName}
                           {availability.isSoldOut && " - SOLD OUT"}
-                          {!availability.isSoldOut && availability.kidTicketsRemaining <= 5 &&
-                            ` (${availability.kidTicketsRemaining} kid tickets left)`}
+                          {!availability.isSoldOut && availability.adultTicketsRemaining <= 10 &&
+                            ` (${availability.adultTicketsRemaining} tickets left)`}
                         </SelectItem>
                       ))
                     ) : (
@@ -426,24 +387,17 @@ export function TicketFormSection() {
 
               {/* Show availability info when date is selected */}
               {selectedNightAvailability && !selectedNightAvailability.isSoldOut && (
-                <div className="p-3 rounded-lg" style={{ background: 'rgba(248, 175, 200, 0.1)', border: '1px solid #F8AFC8' }}>
+                <div className="p-3 rounded-lg" style={{ background: 'rgba(212, 82, 110, 0.1)', border: '1px solid #D4526E' }}>
                   <div className="flex items-start gap-2 text-sm">
-                    <Ticket className="w-4 h-4 mt-0.5" style={{ color: '#F8AFC8' }} />
+                    <Ticket className="w-4 h-4 mt-0.5" style={{ color: '#D4526E' }} />
                     <div>
                       <p style={{ fontWeight: 600, color: '#1F1B24' }}>Availability for this night:</p>
-                      {!selectedNightAvailability.adultOnly && (
-                        <p style={{ color: '#717182' }}>
-                          Kid tickets: {selectedNightAvailability.kidTicketsRemaining}/{MAX_KIDS} remaining
-                        </p>
-                      )}
                       <p style={{ color: '#717182' }}>
-                        Adult tickets: {selectedNightAvailability.adultTicketsRemaining}/{MAX_ADULTS} remaining
+                        {selectedNightAvailability.adultTicketsRemaining}/{MAX_ADULTS} tickets remaining
                       </p>
-                      {selectedNightAvailability.adultOnly && (
-                        <p style={{ color: '#1F1B24', fontWeight: 600, marginTop: '4px' }}>
-                          🔞 Adults-only event
-                        </p>
-                      )}
+                      <p style={{ color: '#D4526E', fontWeight: 600, marginTop: '4px' }}>
+                        🔞 Adults-only event (18+)
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -455,85 +409,25 @@ export function TicketFormSection() {
                   <h3 style={{ fontWeight: 700, color: '#1F1B24' }}>Select Your Tickets</h3>
                   {formData.date && (
                     <div className="text-sm" style={{ color: '#717182' }}>
-                      {!selectedNightAvailability?.adultOnly && (
-                        <>
-                          <span style={{ fontWeight: 600 }}>Kids: {getRemainingKids()}/{MAX_KIDS} left</span>
-                          {' · '}
-                        </>
-                      )}
-                      <span style={{ fontWeight: 600 }}>Adults: {getRemainingAdults()}/{MAX_ADULTS} left</span>
+                      <span style={{ fontWeight: 600 }}>{getRemainingAdults()}/{MAX_ADULTS} left</span>
                     </div>
                   )}
                 </div>
-
-                {/* Kids Tickets - Hidden for Adult-Only Events */}
-                {!selectedNightAvailability?.adultOnly && (
-                  <div className="p-4 rounded-xl border-2 border-[#F8AFC8]/30 bg-[#F8AFC8]/5">
-                  <Label htmlFor="kidTickets" className="flex items-center justify-between mb-2">
-                    <span>👧 Kids Tickets (£12 each)</span>
-                  </Label>
-                  <p className="text-sm mb-3" style={{ color: '#717182' }}>Any dessert + any drink</p>
-                  <div className="flex items-center gap-4">
-                    <Button
-                      type="button"
-                      onClick={() => handleKidsChange(false)}
-                      disabled={formData.kidTickets === 0 || loading}
-                      className="w-12 h-12 rounded-full disabled:opacity-30"
-                      style={{ background: '#F8AFC8', color: '#1F1B24' }}
-                    >
-                      <Minus className="w-5 h-5" />
-                    </Button>
-                    <div className="flex-1 text-center">
-                      <div className="text-2xl" style={{ fontWeight: 700, color: '#1F1B24' }}>
-                        {formData.kidTickets}
-                      </div>
-                      <div className="text-sm" style={{ color: '#717182' }}>
-                        {formData.kidTickets === 0 ? 'None' : `£${formData.kidTickets * 12}`}
-                      </div>
-                    </div>
-                    <Button
-                      type="button"
-                      onClick={() => handleKidsChange(true)}
-                      disabled={formData.kidTickets >= Math.min(MAX_KIDS, getRemainingKids()) || loading}
-                      className="w-12 h-12 rounded-full disabled:opacity-30"
-                      style={{ background: '#F8AFC8', color: '#1F1B24' }}
-                    >
-                      <Plus className="w-5 h-5" />
-                    </Button>
-                  </div>
-                </div>
-                )}
 
                 {/* Adult Tickets */}
-                <div className={`p-4 rounded-xl border-2 border-[#F38DB5]/40 bg-[#F38DB5]/5 ${!selectedNightAvailability?.adultOnly && formData.kidTickets === 0 ? 'opacity-50' : ''}`}>
+                <div className="p-4 rounded-xl border-2 border-[#D4526E]/40 bg-[#D4526E]/5">
                   <Label htmlFor="adultTickets" className="flex items-center justify-between mb-2">
-                    <span>🧑 Adults (£12 each)</span>
-                    <span className="text-xs px-2 py-1 rounded-full" style={{ background: '#F38DB5', color: 'white' }}>Popular</span>
+                    <span>🎟️ Adults 18+ (£12 each)</span>
+                    <span className="text-xs px-2 py-1 rounded-full" style={{ background: '#D4526E', color: 'white' }}>18+ Only</span>
                   </Label>
-                  <p className="text-sm mb-3" style={{ color: '#717182' }}>Any dessert + any drink</p>
-                  {!selectedNightAvailability?.adultOnly && formData.kidTickets === 0 && (
-                    <div className="flex items-start gap-2 text-sm mb-3 px-3 py-2 rounded-lg" style={{ background: '#FFF3CD' }}>
-                      <AlertCircle className="w-4 h-4 mt-0.5" style={{ color: '#856404' }} />
-                      <p style={{ color: '#856404', fontWeight: 600 }}>
-                        Add at least one child ticket first
-                      </p>
-                    </div>
-                  )}
-                  {selectedNightAvailability?.adultOnly && (
-                    <div className="flex items-start gap-2 text-sm mb-3 px-3 py-2 rounded-lg" style={{ background: '#F8AFC8' }}>
-                      <Sparkles className="w-4 h-4 mt-0.5" style={{ color: '#1F1B24' }} />
-                      <p style={{ color: '#1F1B24', fontWeight: 600 }}>
-                        Adults-only event - Kid tickets not available
-                      </p>
-                    </div>
-                  )}
+                  <p className="text-sm mb-3" style={{ color: '#717182' }}>Any dessert + any drink included</p>
                   <div className="flex items-center gap-4">
                     <Button
                       type="button"
                       onClick={() => handleAdultChange(false)}
-                      disabled={(!selectedNightAvailability?.adultOnly && formData.kidTickets === 0) || formData.adultTickets === 0 || loading}
+                      disabled={formData.adultTickets === 0 || loading}
                       className="w-12 h-12 rounded-full disabled:opacity-30"
-                      style={{ background: '#F38DB5', color: 'white' }}
+                      style={{ background: '#D4526E', color: 'white' }}
                     >
                       <Minus className="w-5 h-5" />
                     </Button>
@@ -548,9 +442,9 @@ export function TicketFormSection() {
                     <Button
                       type="button"
                       onClick={() => handleAdultChange(true)}
-                      disabled={(!selectedNightAvailability?.adultOnly && formData.kidTickets === 0) || formData.adultTickets >= Math.min(MAX_ADULTS, getRemainingAdults()) || loading}
+                      disabled={formData.adultTickets >= Math.min(8, getRemainingAdults()) || loading}
                       className="w-12 h-12 rounded-full disabled:opacity-30"
-                      style={{ background: '#F38DB5', color: 'white' }}
+                      style={{ background: '#D4526E', color: 'white' }}
                     >
                       <Plus className="w-5 h-5" />
                     </Button>
@@ -559,15 +453,15 @@ export function TicketFormSection() {
               </div>
 
               {/* Total Display */}
-              <div className="p-5 rounded-xl" style={{ background: '#F8AFC8', border: '2px solid #F38DB5' }}>
+              <div className="p-5 rounded-xl" style={{ background: '#D4526E', border: '2px solid #F38DB5' }}>
                 <div className="flex justify-between items-center">
                   <div>
-                    <span style={{ fontWeight: 700, color: '#1F1B24' }}>Total Amount:</span>
-                    <p className="text-sm" style={{ color: '#1F1B24', opacity: 0.8 }}>
+                    <span style={{ fontWeight: 700, color: 'white' }}>Total Amount:</span>
+                    <p className="text-sm" style={{ color: 'white', opacity: 0.9 }}>
                       {getTotalTickets()} ticket{getTotalTickets() !== 1 ? 's' : ''}
                     </p>
                   </div>
-                  <span className="text-3xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
+                  <span className="text-3xl" style={{ fontWeight: 800, color: 'white' }}>
                     £{calculateTotal()}
                   </span>
                 </div>

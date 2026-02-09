@@ -2,36 +2,36 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 
 const faqs = [
   {
-    question: "Can we bring babies?",
-    answer: "Absolutely! Babies under 1 are more than welcome — there's no ticket needed for them. We just ask that they stay seated with you during the movie so everyone can enjoy the festive fun. 👶✨"
+    question: "Is this event adults only?",
+    answer: "Yes — Valentine's Movie Nights are strictly 18+. This is designed as a relaxed, grown-up evening."
   },
   {
-    question: "Can Children come on their own?",
-    answer: "Yes! Children aged 13 and over are welcome to attend on their own."
+    question: "Can children or babies attend?",
+    answer: "No. This event is designed as a relaxed, adults-only evening. We appreciate your understanding."
   },
   {
-    question: "Can kids sit with parents?",
-    answer: "Kids sit at the front, and parents just behind. This helps us maximise space and make sure the little ones have a clear view of the screen."
+    question: "What's included in the ticket?",
+    answer: "Every £12 ticket includes entry to the movie, any dessert from our menu, and any drink. Choose on the night."
   },
   {
-    question: "Can I pick my dessert in advance?",
-    answer: "Yes, please! Check out our menu which you will receive in your email confirmation and decide before you arrive to help our team serve you faster."
+    question: "Do we need to sit together?",
+    answer: "We'll do our best to seat bookings together, but seating is first come, first served within the layout."
   },
   {
-    question: "Do I need to print my ticket?",
-    answer: "Nope! Just give your name at the counter when you arrive — we'll have your booking ready."
+    question: "When should we arrive?",
+    answer: "Please arrive 15 minutes before the movie starts. Films begin promptly so you don't miss a moment."
+  },
+  {
+    question: "Do I need to pay on arrival?",
+    answer: "No — payment is taken at the time of booking and secures your seat. Nothing to pay on the night."
   },
   {
     question: "Can I change or cancel my booking?",
-    answer: "If you need to make any changes, please contact us at least 24 hours before your movie night."
+    answer: "If you need to make changes, please contact us at least 24 hours in advance and we'll do our best to help."
   },
   {
-    question: "Do babies or toddlers need tickets?",
-    answer: "Only children aged 1 and over need a ticket. Babies under 1 are free."
-  },
-  {
-    question: "Can I arrive late?",
-    answer: "Please try to arrive on time — we can't guarantee seating once the movie has started."
+    question: "Is there parking nearby?",
+    answer: "Yes! Free parking is available nearby. We're easy to find at 369 Limpsfield Road, Warlingham."
   }
 ];
 
@@ -42,10 +42,10 @@ export function FAQSection() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
-              Frequently Asked Questions
+              💬 Frequently Asked Questions
             </h2>
             <p className="text-xl mt-4" style={{ color: '#717182' }}>
-              Everything you need to know 🎄
+              Everything you need to know 💘
             </p>
           </div>
 
@@ -69,7 +69,7 @@ export function FAQSection() {
           {/* Still have questions */}
           <div className="mt-12 text-center p-8 rounded-2xl" style={{ background: 'linear-gradient(135deg, #FFE8F0 0%, #FFF5F0 100%)' }}>
             <p className="text-lg" style={{ color: '#1F1B24' }}>
-              Still have questions? <a href="https://www.instagram.com/thescoopcompany_/" target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ fontWeight: 600, color: '#F8AFC8' }}>DM us on Instagram!</a> 📱
+              Still have questions? <a href="https://www.instagram.com/thescoopcompany_/" target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ fontWeight: 600, color: '#D4526E' }}>DM us on Instagram!</a> 📱
             </p>
           </div>
         </div>

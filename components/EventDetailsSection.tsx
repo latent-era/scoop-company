@@ -15,29 +15,30 @@ export function EventDetailsSection() {
             <Card className="p-8 bg-white border-2 hover:border-[#F8AFC8] transition-all hover:shadow-xl">
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: '#F8AFC8' }}>
-                  <Film className="w-8 h-8" style={{ color: '#030213' }} />
+                  <Film className="w-8 h-8" style={{ color: '#D4526E' }} />
                 </div>
                 <h3 className="text-2xl" style={{ fontWeight: 700, color: '#1F1B24' }}>What's On</h3>
                 <div className="space-y-2" style={{ color: '#717182' }}>
-                  <p style={{ fontWeight: 600 }}>Home Alone</p>
-                  <p style={{ fontWeight: 600 }}>Elf</p>
-                  <p style={{ fontWeight: 600 }}>The Polar Express</p>
-                  <p style={{ fontWeight: 600 }}>...and many more!</p>
+                  <p style={{ fontWeight: 600 }}>Crazy, Stupid, Love</p>
+                  <p style={{ fontWeight: 600 }}>The Proposal</p>
+                  <p style={{ fontWeight: 600 }}>A Star Is Born</p>
+                  <p className="text-sm mt-2">Three romantic films across Valentine's Weekend</p>
                 </div>
               </div>
             </Card>
 
             {/* Where */}
-            <Card className="p-8 bg-white border-2 hover:border-[#C41E3A] transition-all hover:shadow-xl">
+            <Card className="p-8 bg-white border-2 hover:border-[#D4526E] transition-all hover:shadow-xl">
               <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: '#C41E3A' }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: '#D4526E' }}>
                   <MapPin className="w-8 h-8" style={{ color: '#FFFFFF' }} />
                 </div>
                 <h3 className="text-2xl" style={{ fontWeight: 700, color: '#1F1B24' }}>Where</h3>
                 <div style={{ color: '#717182' }}>
                   <p style={{ fontWeight: 600 }}>The Scoop Company</p>
+                  <p>369 Limpsfield Road</p>
                   <p>Warlingham</p>
-                  <p className="mt-2">Cosy gelato parlour</p>
+                  <p className="mt-2 text-sm">Free parking nearby</p>
                 </div>
               </div>
             </Card>
@@ -50,19 +51,20 @@ export function EventDetailsSection() {
                 </div>
                 <h3 className="text-2xl" style={{ fontWeight: 700, color: '#1F1B24' }}>When</h3>
                 <div style={{ color: '#717182' }}>
-                  <p style={{ fontWeight: 600 }}>11th Nov - 23rd Dec</p>
-                  <p>Film starts 15 minutes after ticket time</p>
+                  <p style={{ fontWeight: 600 }}>Valentine's Weekend</p>
+                  <p>Fri 13th – Sun 15th Feb</p>
+                  <p className="mt-2 text-sm">Please arrive 15 mins early</p>
                 </div>
               </div>
             </Card>
           </div>
 
           {/* Subtext */}
-          <div className="mt-12 text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-[#F8AFC8]/30">
+          <div className="mt-12 text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-[#D4526E]/30">
             <p className="text-lg" style={{ color: '#1F1B24' }}>
-              🎄 <span style={{ fontWeight: 600 }}>Family-friendly</span> •
+              🔞 <span style={{ fontWeight: 600 }}>Adults only (18+)</span> •
               🎟️ <span style={{ fontWeight: 600 }}>Seats are limited</span> •
-              ⏰ <span style={{ fontWeight: 600 }}>Book early!</span>
+              💘 <span style={{ fontWeight: 600 }}>Book early!</span>
             </p>
           </div>
         </div>

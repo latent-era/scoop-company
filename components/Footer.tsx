@@ -48,7 +48,7 @@ export function Footer() {
           {/* Bottom bar */}
           <div className="mt-8 pt-6 border-t-2 border-white/30 text-center">
             <p style={{ color: '#030213' }}>
-              © 2025 The Scoop Company, Warlingham. All rights reserved. 🎄
+              © 2025 The Scoop Company, Warlingham. All rights reserved. 💘
             </p>
           </div>
         </div>
