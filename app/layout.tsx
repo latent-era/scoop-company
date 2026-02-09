@@ -6,8 +6,8 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "The Scoop Company — Scoop & Scream: Halloween Movie Night",
-  description: "£10 per person • Any dessert + Any drink included. One frightfully sweet night in our cosy gelato parlour.",
+  title: "The Scoop Company — Valentine's Movie Nights",
+  description: "£12 per person • Any dessert + Any drink included. Three nights of romantic films, sweet desserts, and cosy late-night vibes.",
 };
 
 export default function RootLayout({

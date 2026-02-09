@@ -3,36 +3,36 @@ import { Sparkles } from "lucide-react";
 
 const menuItems = [
   {
-    name: "Rudolph Cone 🦌",
-    description: "Chocolate scoop topped with pretzel antlers and a red candy nose — the sweetest reindeer you'll ever meet.",
-    image: "/images/rudolph-cone.jpg",
+    name: "Scoops Made to Share 🍨",
+    description: "Our signature gelato — perfect for splitting on date night. Rich flavours, smooth textures, and made fresh daily.",
+    image: "/images/gelato-share.jpg",
     color: "#F8AFC8",
-    emoji: "🦌",
-    doodle: "⭐"
+    emoji: "🍨",
+    doodle: "💕"
   },
   {
-    name: "Gingerbread Whippy 🍪✨",
-    description: "Soft-serve whippy piled high with Christmas sprinkles and mini gingerbread men — the taste of pure holiday joy.",
-    image: "/images/gingerbread-whippy.jpg",
-    color: "#165B33",
-    emoji: "🍪",
-    doodle: "🎄"
+    name: "Chocolate-Heavy Favourites 🍫",
+    description: "For the chocolate lovers — indulgent, decadent, and absolutely worth it. Because Valentine's demands chocolate.",
+    image: "/images/chocolate-dessert.jpg",
+    color: "#D4526E",
+    emoji: "🍫",
+    doodle: "💖"
   },
   {
-    name: "Deluxe Hot Chocolate ☕",
-    description: "Rich, creamy, and topped with whipped cream — warms your soul and melts your willpower.",
+    name: "Cosy Hot Drinks ☕",
+    description: "Rich hot chocolate, creamy lattes, and warming treats — perfect for a cosy evening in our parlour.",
     image: "/images/hot-chocolate.jpg",
     color: "#F38DB5",
     emoji: "☕",
-    doodle: "❄️"
+    doodle: "🌹"
   },
   {
-    name: "Christmas Tree Cone 🎄",
-    description: "A swirl of creamy green whippy in a black cone, finished with a golden star — the tree you actually want to eat.",
-    image: "/images/christmas-cone.jpg",
-    color: "#C41E3A",
-    emoji: "🎄",
-    doodle: "🎄"
+    name: "Protein Whippy Available 💪",
+    description: "Still want something sweet but keeping it balanced? Our protein whippy is guilt-free and delicious.",
+    image: "/images/protein-whippy.jpg",
+    color: "#D4526E",
+    emoji: "💪",
+    doodle: "✨"
   }
 ];
 
@@ -43,17 +43,17 @@ export function MenuHighlightsSection() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
-              Menu Highlights
+              🍨 Menu Highlights
             </h2>
             <p className="text-xl" style={{ color: '#717182' }}>
-              Every ticket includes your pick from the menu — no sneaky upsells.
+              Your ticket includes any dessert and any drink — choose on the night.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {menuItems.map((item, index) => (
-              <Card key={index} className="overflow-hidden border-2 border-transparent hover:border-[#F8AFC8] transition-all hover:shadow-2xl group relative">
-                <div className="relative h-64 overflow-hidden">
+              <Card key={index} className="overflow-hidden border-2 border-transparent hover:border-[#D4526E] transition-all hover:shadow-2xl group relative">
+                <div className="relative h-48 overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -66,17 +66,17 @@ export function MenuHighlightsSection() {
                     <Sparkles className="w-5 h-5" style={{ color: '#FFFFFF' }} />
                   </div>
 
-                  {/* Halloween doodle in corner */}
+                  {/* Valentine's doodle in corner */}
                   <div className="absolute bottom-4 left-4 text-2xl opacity-70">
                     {item.doodle}
                   </div>
                 </div>
 
-                <div className="p-6 bg-white space-y-2">
-                  <h3 className="text-lg" style={{ fontWeight: 700, color: '#1F1B24' }}>
+                <div className="p-4 bg-white space-y-2">
+                  <h3 className="text-base" style={{ fontWeight: 700, color: '#1F1B24' }}>
                     {item.name}
                   </h3>
-                  <p style={{ color: '#717182' }}>
+                  <p className="text-sm" style={{ color: '#717182' }}>
                     {item.description}
                   </p>
                 </div>
@@ -87,7 +87,7 @@ export function MenuHighlightsSection() {
           {/* Additional note */}
           <div className="mt-12 text-center p-6 rounded-2xl bg-gradient-to-r from-[#FFE8F0] to-[#FFF5F0]">
             <p className="text-lg" style={{ color: '#1F1B24' }}>
-              Plus all your favourite flavours from our regular menu! 🍦
+              Plus all your favourite flavours from our regular menu! 🍦💘
             </p>
           </div>
         </div>
