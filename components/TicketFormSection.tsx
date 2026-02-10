@@ -395,9 +395,6 @@ export function TicketFormSection() {
                       <p style={{ color: '#717182' }}>
                         {selectedNightAvailability.adultTicketsRemaining}/{MAX_ADULTS} tickets remaining
                       </p>
-                      <p style={{ color: '#D4526E', fontWeight: 600, marginTop: '4px' }}>
-                        🔞 Adults-only event (18+)
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -417,8 +414,7 @@ export function TicketFormSection() {
                 {/* Adult Tickets */}
                 <div className="p-4 rounded-xl border-2 border-[#D4526E]/40 bg-[#D4526E]/5">
                   <Label htmlFor="adultTickets" className="flex items-center justify-between mb-2">
-                    <span>🎟️ Adults 18+ (£12 each)</span>
-                    <span className="text-xs px-2 py-1 rounded-full" style={{ background: '#D4526E', color: 'white' }}>18+ Only</span>
+                    <span>🎟️ Adults (£12 each)</span>
                   </Label>
                   <p className="text-sm mb-3" style={{ color: '#717182' }}>Any dessert + any drink included</p>
                   <div className="flex items-center gap-4">
