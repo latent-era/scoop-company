@@ -9,6 +9,7 @@ import { OrderForm } from "@/components/yule-log/OrderForm";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Cake, ChevronDown, Check } from "lucide-react";
 import { BIRTHDAY_CAKES_SOLD_OUT } from "@/lib/inventory";
+import { StickyMobileHeader } from "@/components/cake/StickyMobileHeader";
 
 // Size options with pricing
 const SIZES = [
@@ -29,38 +30,36 @@ type ButtercreamId = typeof BUTTERCREAM_OPTIONS[number]["id"];
 
 // Flavours with availability based on size
 const FLAVOURS = [
-  { id: "vanilla", name: "Classic Vanilla", color: "from-[#FEF9C3] to-[#FDE68A]", textColor: "text-[#3D2B1F]", dietary: ["V", "GF"], available: "both" },
-  { id: "strawberry", name: "Strawberry Swirl", color: "from-[#FBCFE8] to-[#F9A8D4]", textColor: "text-[#3D2B1F]", dietary: ["V", "GF"], available: "both" },
-  { id: "pistachio", name: "Pistachio Dream", color: "from-[#BBF7D0] to-[#86EFAC]", textColor: "text-[#3D2B1F]", dietary: ["V", "GF", "N"], available: "large-only" },
-  { id: "chocolate", name: "Belgian Chocolate", color: "from-[#A16207] to-[#854D0E]", textColor: "text-white", dietary: ["V", "GF"], available: "large-only" },
-  { id: "mango", name: "Mango Sorbet", color: "from-[#FED7AA] to-[#FDBA74]", textColor: "text-[#3D2B1F]", dietary: ["Vg", "GF", "DF"], available: "both" },
-  { id: "salted-caramel", name: "Salted Caramel", color: "from-[#D4A574] to-[#C19A6B]", textColor: "text-[#3D2B1F]", dietary: ["V", "GF"], available: "both" },
-  { id: "hazelnut", name: "Roasted Hazelnut", color: "from-[#D6B896] to-[#C9A87C]", textColor: "text-[#3D2B1F]", dietary: ["V", "GF", "N"], available: "large-only" },
-  { id: "lemon", name: "Zesty Lemon", color: "from-[#FEF9C3] to-[#FEF08A]", textColor: "text-[#3D2B1F]", dietary: ["Vg", "GF", "DF"], available: "both" },
-  { id: "mint", name: "Mint Choc Chip", color: "from-[#A7F3D0] to-[#6EE7B7]", textColor: "text-[#3D2B1F]", dietary: ["V", "GF"], available: "large-only" },
-  { id: "raspberry", name: "Raspberry Ripple", color: "from-[#FECDD3] to-[#FDA4AF]", textColor: "text-[#3D2B1F]", dietary: ["V", "GF"], available: "both" }
+  { id: 'pistachio', name: 'Pistachio', color: 'from-[#BBF7D0] to-[#86EFAC]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'GF', 'D', 'N'], available: 'large-only' },
+  { id: 'dark-chocolate', name: 'Dark Chocolate', color: 'from-[#78350F] to-[#451A03]', textColor: 'text-white', dietary: ['V', 'Vg', 'H', 'GF'], available: 'large-only' },
+  { id: 'milk-chocolate', name: 'Milk Chocolate', color: 'from-[#A16207] to-[#854D0E]', textColor: 'text-white', dietary: ['V', 'H', 'GF', 'D', 'S'], available: 'large-only' },
+  { id: 'jersey-cream', name: 'Jersey Cream', color: 'from-[#FEF9C3] to-[#FDE68A]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'H', 'GF', 'D'], available: 'both' },
+  { id: 'cherry-ripple', name: 'Cherry Ripple', color: 'from-[#FECDD3] to-[#FDA4AF]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'GF', 'D'], available: 'both' },
+  { id: 'strawberry', name: 'Strawberry', color: 'from-[#FBCFE8] to-[#F9A8D4]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'Vg', 'H', 'GF'], available: 'both' },
+  { id: 'mango', name: 'Mango', color: 'from-[#FED7AA] to-[#FDBA74]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'Vg', 'H', 'GF'], available: 'both' },
+  { id: 'salted-caramel', name: 'Salted Caramel', color: 'from-[#D4A574] to-[#C19A6B]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'GF', 'D', 'S'], available: 'both' },
+  { id: 'mint-chocolate', name: 'Mint Chocolate', color: 'from-[#A7F3D0] to-[#6EE7B7]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'GF', 'D'], available: 'both' },
 ];
 
 // Sauces
 const SAUCES = [
-  { name: "Rich Chocolate", dietary: ["V", "GF"] },
-  { name: "Salted Caramel", dietary: ["V", "GF"] },
-  { name: "Fresh Strawberry", dietary: ["Vg", "GF", "DF"] },
-  { name: "Raspberry Coulis", dietary: ["Vg", "GF", "DF"] },
-  { name: "Toffee Drizzle", dietary: ["V", "GF"] },
-  { name: "Passion Fruit", dietary: ["Vg", "GF", "DF"] }
+  { id: 'milk-chocolate', name: 'Milk Chocolate', dietary: ['D', 'V', 'GF'] },
+  { id: 'caramel', name: 'Caramel', dietary: ['D', 'V', 'GF'] },
+  { id: 'strawberry', name: 'Strawberry', dietary: ['Vg', 'GF'] },
+  { id: 'white-chocolate', name: 'White Chocolate', dietary: ['D', 'V', 'S', 'GF'] },
+  { id: 'biscoff', name: 'Biscoff', dietary: ['Vg', 'G'] },
+  { id: 'bueno', name: 'Bueno', dietary: ['D', 'V', 'S', 'N', 'GF'] },
 ];
 
 // Toppings
 const TOPPINGS = [
-  { name: "Rainbow Sprinkles", emoji: "🌈", dietary: ["Vg", "GF"] },
-  { name: "Chocolate Chips", emoji: "🍫", dietary: ["V", "GF"] },
-  { name: "Crushed Oreos", emoji: "🍪", dietary: ["V", "G"] },
-  { name: "Fresh Berries", emoji: "🍓", dietary: ["Vg", "GF", "DF"] },
-  { name: "Mini Marshmallows", emoji: "☁️", dietary: ["GF"] },
-  { name: "Caramel Shards", emoji: "✨", dietary: ["V", "GF"] },
-  { name: "Edible Flowers", emoji: "🌸", dietary: ["Vg", "GF", "DF"] },
-  { name: "Crushed Nuts", emoji: "🥜", dietary: ["Vg", "GF", "N"] }
+  { id: 'sprinkles', name: 'Sprinkles', emoji: '🌈', dietary: ['Vg', 'GF'] },
+  { id: 'oreo-crumb', name: 'Oreo Crumb', emoji: '🍪', dietary: ['Vg', 'S', 'G'] },
+  { id: 'unicorn-poop', name: 'Unicorn Poop', emoji: '🦄', dietary: ['GF'] },
+  { id: 'mixed-nuts', name: 'Mixed Nuts', emoji: '🥜', dietary: ['Vg', 'N', 'GF'] },
+  { id: 'caramelised-nuts', name: 'Caramelised Nuts', emoji: '🥜', dietary: ['Vg', 'N', 'GF'] },
+  { id: 'honeycomb-bites', name: 'Honeycomb Bites', emoji: '🍯', dietary: ['Vg', 'GF'] },
+  { id: 'biscoff-crumb', name: 'Biscoff Crumb', emoji: '🍪', dietary: ['Vg', 'S', 'G'] },
 ];
 
 export default function BirthdayCakePage() {
@@ -203,6 +202,14 @@ export default function BirthdayCakePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#FFF8FB] via-[#F8AFC8]/5 to-[#FFF8FB]">
+      {/* Sticky Mobile Header */}
+      <StickyMobileHeader
+        selectedSize={selectedSize}
+        selectedFlavour={selectedFlavour}
+        selectedSauces={selectedSauces}
+        selectedToppings={selectedToppings}
+      />
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Gradient */}
@@ -409,9 +416,15 @@ export default function BirthdayCakePage() {
                     <span>•</span>
                     <span>GF = Gluten Free</span>
                     <span>•</span>
-                    <span>DF = Dairy Free</span>
+                    <span>D = Dairy Free</span>
                     <span>•</span>
                     <span>N = Contains Nuts</span>
+                    <span>•</span>
+                    <span>H = Halal</span>
+                    <span>•</span>
+                    <span>S = Contains Soya</span>
+                    <span>•</span>
+                    <span>G = Contains Gluten</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -447,8 +460,12 @@ export default function BirthdayCakePage() {
                                       ? "text-green-700 bg-green-100"
                                       : diet === "GF"
                                       ? "text-blue-700 bg-blue-100"
-                                      : diet === "DF"
+                                      : diet === "D"
                                       ? "text-purple-700 bg-purple-100"
+                                      : diet === "H"
+                                      ? "text-teal-700 bg-teal-100"
+                                      : diet === "S" || diet === "G"
+                                      ? "text-amber-700 bg-amber-100"
                                       : "text-orange-700 bg-orange-100"
                                   }`}
                                 >
@@ -485,13 +502,13 @@ export default function BirthdayCakePage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {SAUCES.map((sauce) => {
-                    const isSelected = selectedSauces.includes(sauce.name);
+                    const isSelected = selectedSauces.includes(sauce.id);
                     const isDisabled = !isSelected && selectedSauces.length >= 2;
 
                     return (
                       <button
-                        key={sauce.name}
-                        onClick={() => toggleSauce(sauce.name)}
+                        key={sauce.id}
+                        onClick={() => toggleSauce(sauce.id)}
                         disabled={isDisabled}
                         className={`relative p-4 rounded-xl border-2 transition-all ${
                           isDisabled
@@ -513,7 +530,13 @@ export default function BirthdayCakePage() {
                                       ? "text-green-700 bg-green-100"
                                       : diet === "GF"
                                       ? "text-blue-700 bg-blue-100"
-                                      : "text-purple-700 bg-purple-100"
+                                      : diet === "D"
+                                      ? "text-purple-700 bg-purple-100"
+                                      : diet === "H"
+                                      ? "text-teal-700 bg-teal-100"
+                                      : diet === "S" || diet === "G"
+                                      ? "text-amber-700 bg-amber-100"
+                                      : "text-orange-700 bg-orange-100"
                                   }`}
                                 >
                                   {diet}
@@ -551,13 +574,13 @@ export default function BirthdayCakePage() {
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {TOPPINGS.map((topping) => {
-                    const isSelected = selectedToppings.includes(topping.name);
+                    const isSelected = selectedToppings.includes(topping.id);
                     const isDisabled = !isSelected && selectedToppings.length >= 2;
 
                     return (
                       <button
-                        key={topping.name}
-                        onClick={() => toggleTopping(topping.name)}
+                        key={topping.id}
+                        onClick={() => toggleTopping(topping.id)}
                         disabled={isDisabled}
                         className={`relative p-4 rounded-xl border-2 transition-all ${
                           isDisabled

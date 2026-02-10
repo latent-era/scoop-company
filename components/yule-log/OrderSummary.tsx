@@ -35,18 +35,44 @@ const BUTTERCREAM_PRICES = {
 // Helper to get flavour display name
 const getFlavourName = (flavourId: string) => {
   const names: { [key: string]: string } = {
-    'vanilla': 'Classic Vanilla',
-    'strawberry': 'Strawberry Swirl',
-    'pistachio': 'Pistachio Dream',
-    'chocolate': 'Belgian Chocolate',
-    'mango': 'Mango Sorbet',
+    'pistachio': 'Pistachio',
+    'dark-chocolate': 'Dark Chocolate',
+    'milk-chocolate': 'Milk Chocolate',
+    'jersey-cream': 'Jersey Cream',
+    'cherry-ripple': 'Cherry Ripple',
+    'strawberry': 'Strawberry',
+    'mango': 'Mango',
     'salted-caramel': 'Salted Caramel',
-    'hazelnut': 'Roasted Hazelnut',
-    'lemon': 'Zesty Lemon',
-    'mint': 'Mint Choc Chip',
-    'raspberry': 'Raspberry Ripple',
+    'mint-chocolate': 'Mint Chocolate',
   };
   return names[flavourId] || flavourId;
+};
+
+// Helper to get sauce display name
+const getSauceName = (sauceId: string) => {
+  const names: { [key: string]: string } = {
+    'milk-chocolate': 'Milk Chocolate',
+    'caramel': 'Caramel',
+    'strawberry': 'Strawberry',
+    'white-chocolate': 'White Chocolate',
+    'biscoff': 'Biscoff',
+    'bueno': 'Bueno',
+  };
+  return names[sauceId] || sauceId;
+};
+
+// Helper to get topping display name
+const getToppingName = (toppingId: string) => {
+  const names: { [key: string]: string } = {
+    'sprinkles': 'Sprinkles',
+    'oreo-crumb': 'Oreo Crumb',
+    'unicorn-poop': 'Unicorn Poop',
+    'mixed-nuts': 'Mixed Nuts',
+    'caramelised-nuts': 'Caramelised Nuts',
+    'honeycomb-bites': 'Honeycomb Bites',
+    'biscoff-crumb': 'Biscoff Crumb',
+  };
+  return names[toppingId] || toppingId;
 };
 
 // Calculate price for a single item (before quantity)
@@ -129,10 +155,10 @@ export function OrderSummary({
                     <p>Size: {item.size === "small" ? "Small (6-8)" : "Large (10-12)"}</p>
                     <p>Buttercream: {item.buttercream === "small" ? "Small Decorative" : item.buttercream === "full" ? "Full Coverage" : "None"}</p>
                     {item.sauces.length > 0 && (
-                      <p>Sauces: {item.sauces.join(", ")}</p>
+                      <p>Sauces: {item.sauces.map(getSauceName).join(", ")}</p>
                     )}
                     {item.toppings.length > 0 && (
-                      <p>Toppings: {item.toppings.join(", ")}</p>
+                      <p>Toppings: {item.toppings.map(getToppingName).join(", ")}</p>
                     )}
                   </div>
 

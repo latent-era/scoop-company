@@ -19,10 +19,9 @@ export function EventDetailsSection() {
                 </div>
                 <h3 className="text-2xl" style={{ fontWeight: 700, color: '#1F1B24' }}>What's On</h3>
                 <div className="space-y-2" style={{ color: '#717182' }}>
-                  <p style={{ fontWeight: 600 }}>Crazy, Stupid, Love</p>
-                  <p style={{ fontWeight: 600 }}>The Proposal</p>
-                  <p style={{ fontWeight: 600 }}>A Star Is Born</p>
-                  <p className="text-sm mt-2">Three romantic films across Valentine's Weekend</p>
+                  <p style={{ fontWeight: 600 }}>Gnomeo & Juliet</p>
+                  <p style={{ fontWeight: 600 }}>Tangled</p>
+                  <p className="text-sm mt-2">Two family-friendly films this February</p>
                 </div>
               </div>
             </Card>
@@ -51,8 +50,8 @@ export function EventDetailsSection() {
                 </div>
                 <h3 className="text-2xl" style={{ fontWeight: 700, color: '#1F1B24' }}>When</h3>
                 <div style={{ color: '#717182' }}>
-                  <p style={{ fontWeight: 600 }}>Valentine's Weekend</p>
-                  <p>Fri 13th – Sun 15th Feb</p>
+                  <p style={{ fontWeight: 600 }}>This February</p>
+                  <p>Thu 19th – Fri 20th Feb</p>
                   <p className="mt-2 text-sm">Please arrive 15 mins early</p>
                 </div>
               </div>
@@ -62,9 +61,8 @@ export function EventDetailsSection() {
           {/* Subtext */}
           <div className="mt-12 text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-[#D4526E]/30">
             <p className="text-lg" style={{ color: '#1F1B24' }}>
-              🔞 <span style={{ fontWeight: 600 }}>Adults only (18+)</span> •
               🎟️ <span style={{ fontWeight: 600 }}>Seats are limited</span> •
-              💘 <span style={{ fontWeight: 600 }}>Book early!</span>
+              🎬 <span style={{ fontWeight: 600 }}>Book early!</span>
             </p>
           </div>
         </div>
