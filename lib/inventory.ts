@@ -13,30 +13,6 @@ export interface EventNight {
 // Event nights configuration
 export const EVENT_NIGHTS: readonly EventNight[] = [
   {
-    key: '13-feb',
-    displayName: '💖 Fri 13 Feb - Crazy, Stupid, Love - 7:00PM',
-    value: 'Friday 13 Feb — 7:00pm',
-    movie: 'Crazy, Stupid, Love',
-    date: '2026-02-13T19:00:00',
-    adultOnly: true
-  },
-  {
-    key: '14-feb',
-    displayName: '💘 Sat 14 Feb - The Proposal - 7:00PM',
-    value: 'Saturday 14 Feb — 7:00pm',
-    movie: 'The Proposal',
-    date: '2026-02-14T19:00:00',
-    adultOnly: true
-  },
-  {
-    key: '15-feb',
-    displayName: '💕 Sun 15 Feb - A Star Is Born - 7:00PM',
-    value: 'Sunday 15 Feb — 7:00pm',
-    movie: 'A Star Is Born',
-    date: '2026-02-15T19:00:00',
-    adultOnly: true
-  },
-  {
     key: '19-feb',
     displayName: '🌹 Thu 19 Feb - Gnomeo & Juliet - 4:30PM',
     value: 'Thursday 19 Feb — 4:30pm',
