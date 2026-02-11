@@ -29,7 +29,7 @@ export const EVENT_NIGHTS: readonly EventNight[] = [
 ];
 
 export const MAX_KID_TICKETS = 20;
-export const MAX_ADULT_TICKETS = 30;
+export const MAX_ADULT_TICKETS = 15;
 export const RESERVATION_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
 
 // Global sold out flag - set to true to disable all ticket sales
@@ -193,20 +193,8 @@ export async function reserveTickets(
   }
 
   // Validate inputs
-  if (!isAdultOnly && kidTickets < 1) {
-    return { success: false, error: 'Must book at least 1 kid ticket' };
-  }
-
-  if (!isAdultOnly && adultTickets > 0 && kidTickets < 1) {
-    return { success: false, error: 'Must have at least 1 kid ticket to book adult tickets' };
-  }
-
   if (isAdultOnly && kidTickets > 0) {
     return { success: false, error: 'This is an adults-only event. Kid tickets are not available.' };
-  }
-
-  if (isAdultOnly && adultTickets < 1) {
-    return { success: false, error: 'Must book at least 1 adult ticket' };
   }
 
   if (kidTickets > 8 || adultTickets > 8) {
