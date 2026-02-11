@@ -20,7 +20,8 @@ interface Availability {
   adultOnly?: boolean;
 }
 
-const MAX_ADULTS = 30;
+const MAX_KIDS = 20;
+const MAX_ADULTS = 15;
 
 // Declare fbq for TypeScript
 declare global {
@@ -81,16 +82,32 @@ export function TicketFormSection() {
     }
   }, [formData.date, availabilities]);
 
+  const isAdultOnly = selectedNightAvailability?.adultOnly === true;
+
   const calculateTotal = () => {
-    return formData.adultTickets * 12;
+    return (formData.kidTickets * 12) + (formData.adultTickets * 12);
   };
 
   const getTotalTickets = () => {
-    return formData.adultTickets;
+    return formData.kidTickets + formData.adultTickets;
+  };
+
+  const getRemainingKids = () => {
+    return selectedNightAvailability ? selectedNightAvailability.kidTicketsRemaining : MAX_KIDS;
   };
 
   const getRemainingAdults = () => {
     return selectedNightAvailability ? selectedNightAvailability.adultTicketsRemaining : MAX_ADULTS;
+  };
+
+  const handleKidChange = (increment: boolean) => {
+    const remaining = getRemainingKids();
+
+    if (increment && formData.kidTickets < Math.min(8, remaining)) {
+      setFormData({ ...formData, kidTickets: formData.kidTickets + 1 });
+    } else if (!increment && formData.kidTickets > 0) {
+      setFormData({ ...formData, kidTickets: formData.kidTickets - 1 });
+    }
   };
 
   const handleAdultChange = (increment: boolean) => {
@@ -116,10 +133,6 @@ export function TicketFormSection() {
       return;
     }
 
-    if (formData.adultTickets < 1) {
-      toast.error("You must book at least 1 adult ticket");
-      return;
-    }
 
     setLoading(true);
 
@@ -145,7 +158,7 @@ export function TicketFormSection() {
           email: formData.email,
           phone: formData.phone,
           night: formData.date,
-          kidTickets: 0,
+          kidTickets: formData.kidTickets,
           adultTickets: formData.adultTickets
         }),
       });
@@ -392,8 +405,13 @@ export function TicketFormSection() {
                     <Ticket className="w-4 h-4 mt-0.5" style={{ color: '#D4526E' }} />
                     <div>
                       <p style={{ fontWeight: 600, color: '#1F1B24' }}>Availability for this night:</p>
+                      {!isAdultOnly && (
+                        <p style={{ color: '#717182' }}>
+                          👧 {selectedNightAvailability.kidTicketsRemaining}/{MAX_KIDS} kids tickets remaining
+                        </p>
+                      )}
                       <p style={{ color: '#717182' }}>
-                        {selectedNightAvailability.adultTicketsRemaining}/{MAX_ADULTS} tickets remaining
+                        🧑 {selectedNightAvailability.adultTicketsRemaining}/{MAX_ADULTS} adult tickets remaining
                       </p>
                     </div>
                   </div>
@@ -404,12 +422,46 @@ export function TicketFormSection() {
               <div className="space-y-4 pt-4">
                 <div className="flex items-center justify-between">
                   <h3 style={{ fontWeight: 700, color: '#1F1B24' }}>Select Your Tickets</h3>
-                  {formData.date && (
-                    <div className="text-sm" style={{ color: '#717182' }}>
-                      <span style={{ fontWeight: 600 }}>{getRemainingAdults()}/{MAX_ADULTS} left</span>
-                    </div>
-                  )}
                 </div>
+
+                {/* Kids Tickets */}
+                {!isAdultOnly && (
+                  <div className="p-4 rounded-xl border-2 border-[#D4526E]/40 bg-[#D4526E]/5">
+                    <Label htmlFor="kidTickets" className="flex items-center justify-between mb-2">
+                      <span>👧 Kids (£12 each)</span>
+                    </Label>
+                    <p className="text-sm" style={{ color: '#717182' }}>Any dessert + any drink included</p>
+                    <p className="text-sm mb-3" style={{ color: '#D4526E', fontWeight: 500 }}>Kids must be accompanied by an adult</p>
+                    <div className="flex items-center gap-4">
+                      <Button
+                        type="button"
+                        onClick={() => handleKidChange(false)}
+                        disabled={formData.kidTickets === 0 || loading}
+                        className="w-12 h-12 rounded-full disabled:opacity-30"
+                        style={{ background: '#D4526E', color: 'white' }}
+                      >
+                        <Minus className="w-5 h-5" />
+                      </Button>
+                      <div className="flex-1 text-center">
+                        <div className="text-2xl" style={{ fontWeight: 700, color: '#1F1B24' }}>
+                          {formData.kidTickets}
+                        </div>
+                        <div className="text-sm" style={{ color: '#717182' }}>
+                          {formData.kidTickets === 0 ? 'None' : `£${formData.kidTickets * 12}`}
+                        </div>
+                      </div>
+                      <Button
+                        type="button"
+                        onClick={() => handleKidChange(true)}
+                        disabled={formData.kidTickets >= Math.min(8, getRemainingKids()) || loading}
+                        className="w-12 h-12 rounded-full disabled:opacity-30"
+                        style={{ background: '#D4526E', color: 'white' }}
+                      >
+                        <Plus className="w-5 h-5" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Adult Tickets */}
                 <div className="p-4 rounded-xl border-2 border-[#D4526E]/40 bg-[#D4526E]/5">
