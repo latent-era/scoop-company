@@ -36,7 +36,7 @@ export function HeroSection() {
           <div className="text-center md:text-left space-y-6 relative z-20 order-1">
             <div className="flex flex-col sm:flex-row items-center md:items-start gap-3">
               <Badge className="px-4 py-2 text-sm" style={{ background: '#D4526E', color: 'white', fontWeight: 600 }}>
-                🔞 18+ Event
+                👨‍👩‍👧 Family Friendly
               </Badge>
               <Badge className="px-4 py-2 text-sm border-2" style={{ background: 'transparent', borderColor: '#D4526E', color: '#D4526E', fontWeight: 600 }}>
                 {BOOKING_COMING_SOON ? '💘 Coming Soon' : TICKETS_SOLD_OUT ? '💘 Sold Out' : '💘 Only 3 Valentine\'s Nights'}
