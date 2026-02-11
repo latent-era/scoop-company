@@ -2,12 +2,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 
 const faqs = [
   {
-    question: "Is this event adults only?",
-    answer: "Yes — Valentine's Movie Nights are strictly 18+. This is designed as a relaxed, grown-up evening."
+    question: "Is this event family friendly?",
+    answer: "Yes! Valentine's Movie Nights are family friendly. We're showing Gnomeo & Juliet and Tangled — perfect for kids and grown-ups alike."
   },
   {
-    question: "Can children or babies attend?",
-    answer: "No. This event is designed as a relaxed, adults-only evening. We appreciate your understanding."
+    question: "Can children attend?",
+    answer: "Absolutely! Kids are very welcome. All children must be accompanied by an adult. Kids and adult tickets are both £12 and include any dessert + any drink."
   },
   {
     question: "What's included in the ticket?",

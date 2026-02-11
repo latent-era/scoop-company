@@ -37,7 +37,7 @@ export function PricingSection() {
               )}
               {!TICKETS_SOLD_OUT && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 px-4 py-1 rounded-full text-sm" style={{ background: '#D4526E', color: 'white', fontWeight: 600 }}>
-                  🔞 Adults Only (18+)
+                  👨‍👩‍👧 Family Friendly
                 </div>
               )}
 
@@ -45,7 +45,7 @@ export function PricingSection() {
                 <div className="text-4xl">🎟️</div>
 
                 <h3 className="text-xl" style={{ fontWeight: 700, color: '#1F1B24' }}>
-                  Adult Ticket
+                  Per Person
                 </h3>
 
                 <div className="py-4">
@@ -74,11 +74,11 @@ export function PricingSection() {
                   </div>
                   <div className="flex items-start gap-2">
                     <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#D4526E' }} />
-                    <span style={{ color: '#717182' }}>Romantic movie screening</span>
+                    <span style={{ color: '#717182' }}>Family-friendly movie screening</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Check className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#D4526E' }} />
-                    <span style={{ color: '#717182' }}>Perfect date night experience</span>
+                    <span style={{ color: '#717182' }}>Kids welcome (must be with an adult)</span>
                   </div>
                 </div>
               </div>
