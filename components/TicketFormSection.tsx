@@ -142,7 +142,7 @@ export function TicketFormSection() {
         currency: 'GBP',
         value: calculateTotal(),
         content_type: 'product',
-        content_name: 'Valentine\'s Movie Night Tickets',
+        content_name: 'Kids Cinema Night Tickets',
         num_items: getTotalTickets(),
       });
     }
@@ -186,18 +186,18 @@ export function TicketFormSection() {
   if (BOOKING_COMING_SOON) {
     return (
       <section id="tickets" className="py-20 relative overflow-hidden" style={{ background: '#FFE8F0' }}>
-        {/* Decorative background with Valentine's icons */}
+        {/* Decorative background */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute top-20 left-10 text-9xl">💕</div>
+          <div className="absolute top-20 left-10 text-9xl">⭐</div>
           <div className="absolute bottom-20 right-20 text-9xl">🍦</div>
-          <div className="absolute top-1/2 left-1/4 text-7xl">💖</div>
-          <div className="absolute top-32 right-16 text-6xl">🌹</div>
+          <div className="absolute top-1/2 left-1/4 text-7xl">🎬</div>
+          <div className="absolute top-32 right-16 text-6xl">🍿</div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12 space-y-4">
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4526E] text-white rounded-full">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-[#F8AFC8] text-white rounded-full">
                 <Sparkles className="w-5 h-5" />
                 <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>COMING SOON</span>
               </div>
@@ -210,19 +210,19 @@ export function TicketFormSection() {
               </p>
             </div>
 
-            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#D4526E]/30">
+            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#F8AFC8]/30">
               <div className="text-center space-y-6">
-                <div className="text-6xl mb-4">💘</div>
+                <div className="text-6xl mb-4">🎬</div>
 
                 <h3 className="text-2xl md:text-3xl" style={{ fontWeight: 700, color: '#1F1B24' }}>
                   Stay Tuned!
                 </h3>
 
                 <p className="text-lg" style={{ color: '#717182', lineHeight: '1.6' }}>
-                  We're busy planning Valentine's Movie Nights for you. Follow us on social media to be the first to know when tickets go on sale!
+                  We're busy planning Kids Cinema Nights for you. Follow us on social media to be the first to know when tickets go on sale!
                 </p>
 
-                <div className="p-5 rounded-xl mt-6" style={{ background: '#D4526E', border: '2px solid #F38DB5' }}>
+                <div className="p-5 rounded-xl mt-6" style={{ background: '#F8AFC8', border: '2px solid #F38DB5' }}>
                   <p style={{ fontWeight: 600, color: 'white' }}>
                     New dates will be announced soon!
                   </p>
@@ -239,12 +239,12 @@ export function TicketFormSection() {
   if (TICKETS_SOLD_OUT) {
     return (
       <section id="tickets" className="py-20 relative overflow-hidden" style={{ background: '#FFE8F0' }}>
-        {/* Decorative background with Valentine's icons */}
+        {/* Decorative background */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute top-20 left-10 text-9xl">💕</div>
+          <div className="absolute top-20 left-10 text-9xl">⭐</div>
           <div className="absolute bottom-20 right-20 text-9xl">🍦</div>
-          <div className="absolute top-1/2 left-1/4 text-7xl">💖</div>
-          <div className="absolute top-32 right-16 text-6xl">🌹</div>
+          <div className="absolute top-1/2 left-1/4 text-7xl">🎬</div>
+          <div className="absolute top-32 right-16 text-6xl">🍿</div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -256,14 +256,14 @@ export function TicketFormSection() {
               </div>
 
               <h2 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
-                Thank You! 💘
+                Thank You! 🎬
               </h2>
               <p className="text-xl" style={{ color: '#717182' }}>
                 We've reached full capacity for all nights
               </p>
             </div>
 
-            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#D4526E]/30">
+            <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#F8AFC8]/30">
               <div className="text-center space-y-6">
                 <div className="text-6xl mb-4">🍦</div>
 
@@ -273,12 +273,12 @@ export function TicketFormSection() {
 
                 <p className="text-lg" style={{ color: '#717182', lineHeight: '1.6' }}>
                   We're overwhelmed by the amazing response! Thank you to everyone who secured their tickets.
-                  All Valentine's nights are now completely sold out.
+                  All cinema nights are now completely sold out.
                 </p>
 
-                <div className="p-5 rounded-xl mt-6" style={{ background: '#D4526E', border: '2px solid #F38DB5' }}>
+                <div className="p-5 rounded-xl mt-6" style={{ background: '#F8AFC8', border: '2px solid #F38DB5' }}>
                   <p style={{ fontWeight: 600, color: 'white' }}>
-                    See you at The Scoop Company! 💕🌹
+                    See you at The Scoop Company! 🍿🎬
                   </p>
                 </div>
 
@@ -296,42 +296,43 @@ export function TicketFormSection() {
 
   return (
     <section id="tickets" className="py-20 relative overflow-hidden" style={{ background: '#FFE8F0' }}>
-      {/* Decorative background with Valentine's icons */}
+      {/* Decorative background */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-20 left-10 text-9xl">💕</div>
-        <div className="absolute bottom-20 right-20 text-9xl">🍦</div>
-        <div className="absolute top-1/2 left-1/4 text-7xl">💖</div>
-        <div className="absolute top-32 right-16 text-6xl">🌹</div>
+        <div className="absolute top-20 left-10 text-9xl">⭐</div>
+        <div className="absolute bottom-20 right-20 text-8xl">✨</div>
+        <div className="absolute top-1/2 left-1/4 text-7xl">🎬</div>
+        <div className="absolute top-32 right-16 text-8xl">🍿</div>
+        <div className="absolute top-1/2 left-1/2 text-7xl transform -translate-x-1/2 -translate-y-1/2">🌟</div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12 space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full">
-              <Ticket className="w-5 h-5" style={{ color: '#D4526E' }} />
+              <Ticket className="w-5 h-5" style={{ color: '#F8AFC8' }} />
               <span style={{ fontWeight: 600, color: '#1F1B24' }}>Limited Availability</span>
             </div>
 
             <h2 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
-              Secure Your Spot 🎟️
+              🎟️ Book Your Seats
             </h2>
             <p className="text-xl" style={{ color: '#717182' }}>
-              Book now before seats run out!
+              Secure your spot for a magical movie night
             </p>
           </div>
 
-          <Card className="p-8 md:p-10 bg-white shadow-2xl border-2 border-[#D4526E]/30">
+          <Card className="p-8 md:p-10 bg-white shadow-2xl border-2" style={{ borderColor: '#F8AFC8' }}>
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name */}
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">Parent/Carer Name</Label>
                 <Input
                   id="name"
                   type="text"
-                  placeholder="Your name"
+                  placeholder="Your full name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="h-12 border-2 focus:border-[#D4526E]"
+                  className="h-12 border-2"
                   disabled={loading}
                 />
               </div>
@@ -342,31 +343,34 @@ export function TicketFormSection() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="your.email@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-12 border-2 focus:border-[#D4526E]"
+                  className="h-12 border-2"
                   disabled={loading}
                 />
               </div>
 
               {/* Phone Number */}
               <div className="space-y-2">
-                <Label htmlFor="phone">Mobile Number</Label>
+                <Label htmlFor="phone">Mobile Number (UK) *</Label>
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="07XXX XXXXXX"
+                  placeholder="07123 456789"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="h-12 border-2 focus:border-[#D4526E]"
+                  className="h-12 border-2"
                   disabled={loading}
                 />
+                <p className="text-sm" style={{ color: '#717182' }}>
+                  Required for booking confirmation
+                </p>
               </div>
 
               {/* Preferred Night */}
               <div className="space-y-2">
-                <Label htmlFor="date">Choose Your Valentine's Night</Label>
+                <Label htmlFor="date">Choose Your Screening</Label>
                 <Select
                   value={formData.date}
                   onValueChange={(value) => setFormData({ ...formData, date: value })}
@@ -400,9 +404,9 @@ export function TicketFormSection() {
 
               {/* Show availability info when date is selected */}
               {selectedNightAvailability && !selectedNightAvailability.isSoldOut && (
-                <div className="p-3 rounded-lg" style={{ background: 'rgba(212, 82, 110, 0.1)', border: '1px solid #D4526E' }}>
+                <div className="p-3 rounded-lg" style={{ background: 'rgba(248, 175, 200, 0.15)', border: '1px solid #F8AFC8' }}>
                   <div className="flex items-start gap-2 text-sm">
-                    <Ticket className="w-4 h-4 mt-0.5" style={{ color: '#D4526E' }} />
+                    <Ticket className="w-4 h-4 mt-0.5" style={{ color: '#F8AFC8' }} />
                     <div>
                       <p style={{ fontWeight: 600, color: '#1F1B24' }}>Availability for this night:</p>
                       {!isAdultOnly && (
@@ -426,19 +430,18 @@ export function TicketFormSection() {
 
                 {/* Kids Tickets */}
                 {!isAdultOnly && (
-                  <div className="p-4 rounded-xl border-2 border-[#D4526E]/40 bg-[#D4526E]/5">
+                  <div className="p-4 rounded-xl border-2 border-[#F8AFC8]/30 bg-[#F8AFC8]/5">
                     <Label htmlFor="kidTickets" className="flex items-center justify-between mb-2">
-                      <span>👧 Kids (£12 each)</span>
+                      <span>🎟️ Kids Tickets — £12 each</span>
                     </Label>
-                    <p className="text-sm" style={{ color: '#717182' }}>Any dessert + any drink included</p>
-                    <p className="text-sm mb-3" style={{ color: '#D4526E', fontWeight: 500 }}>Kids must be accompanied by an adult</p>
+                    <p className="text-sm mb-3" style={{ color: '#717182' }}>Any dessert + any drink</p>
                     <div className="flex items-center gap-4">
                       <Button
                         type="button"
                         onClick={() => handleKidChange(false)}
                         disabled={formData.kidTickets === 0 || loading}
                         className="w-12 h-12 rounded-full disabled:opacity-30"
-                        style={{ background: '#D4526E', color: 'white' }}
+                        style={{ background: '#F8AFC8', color: 'white' }}
                       >
                         <Minus className="w-5 h-5" />
                       </Button>
@@ -455,7 +458,7 @@ export function TicketFormSection() {
                         onClick={() => handleKidChange(true)}
                         disabled={formData.kidTickets >= Math.min(8, getRemainingKids()) || loading}
                         className="w-12 h-12 rounded-full disabled:opacity-30"
-                        style={{ background: '#D4526E', color: 'white' }}
+                        style={{ background: '#F8AFC8', color: 'white' }}
                       >
                         <Plus className="w-5 h-5" />
                       </Button>
@@ -464,11 +467,11 @@ export function TicketFormSection() {
                 )}
 
                 {/* Adult Tickets */}
-                <div className="p-4 rounded-xl border-2 border-[#D4526E]/40 bg-[#D4526E]/5">
+                <div className="p-4 rounded-xl border-2 border-[#E8A87C]/30 bg-[#E8A87C]/5">
                   <Label htmlFor="adultTickets" className="flex items-center justify-between mb-2">
-                    <span>🎟️ Adults (£12 each)</span>
+                    <span>👨‍👩‍👧 Adult Tickets — £12 each</span>
                   </Label>
-                  <p className="text-sm mb-3" style={{ color: '#717182' }}>Any dessert + any drink included</p>
+                  <p className="text-sm mb-3" style={{ color: '#717182' }}>Same great offer • Must book with child ticket</p>
                   <div className="flex items-center gap-4">
                     <Button
                       type="button"
@@ -501,18 +504,19 @@ export function TicketFormSection() {
               </div>
 
               {/* Total Display */}
-              <div className="p-5 rounded-xl" style={{ background: '#D4526E', border: '2px solid #F38DB5' }}>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span style={{ fontWeight: 700, color: 'white' }}>Total Amount:</span>
-                    <p className="text-sm" style={{ color: 'white', opacity: 0.9 }}>
-                      {getTotalTickets()} ticket{getTotalTickets() !== 1 ? 's' : ''}
-                    </p>
-                  </div>
-                  <span className="text-3xl" style={{ fontWeight: 800, color: 'white' }}>
-                    £{calculateTotal()}
-                  </span>
+              <div className="p-6 rounded-xl flex items-center justify-between" style={{ background: '#F8AFC8', color: 'white' }}>
+                <div>
+                  <span style={{ fontWeight: 700 }}>Total Amount:</span>
+                  <p className="text-sm text-white/90">
+                    {getTotalTickets()} ticket{getTotalTickets() !== 1 ? 's' : ''}
+                    {formData.kidTickets > 0 && ` (${formData.kidTickets} child${formData.kidTickets !== 1 ? 'ren' : ''}`}
+                    {formData.adultTickets > 0 && `, ${formData.adultTickets} adult${formData.adultTickets !== 1 ? 's' : ''})`}
+                    {formData.kidTickets > 0 && formData.adultTickets === 0 && ')'}
+                  </p>
                 </div>
+                <span className="text-3xl" style={{ fontWeight: 800 }}>
+                  £{calculateTotal()}
+                </span>
               </div>
 
               {/* Submit Button */}

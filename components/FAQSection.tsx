@@ -2,32 +2,20 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 
 const faqs = [
   {
-    question: "Is this event family friendly?",
-    answer: "Yes! Valentine's Movie Nights are family friendly. We're showing Gnomeo & Juliet and Tangled — perfect for kids and grown-ups alike."
+    question: "Are kids welcome?",
+    answer: "Yes — these cinema nights are designed especially for children and families."
   },
   {
-    question: "Can children attend?",
-    answer: "Absolutely! Kids are very welcome. All children must be accompanied by an adult. Kids and adult tickets are both £12 and include any dessert + any drink."
+    question: "What time should we arrive?",
+    answer: "Please arrive 10–15 minutes before 4:30pm so everyone is settled before the film starts."
+  },
+  {
+    question: "Can parents stay with their children?",
+    answer: "Absolutely — parents and carers are welcome to stay and enjoy the screening. Kids aged 13+ can be left alone if they're happy to watch by themselves."
   },
   {
     question: "What's included in the ticket?",
-    answer: "Every £12 ticket includes entry to the movie, any dessert from our menu, and any drink. Choose on the night."
-  },
-  {
-    question: "Do we need to sit together?",
-    answer: "We'll do our best to seat bookings together, but seating is first come, first served within the layout."
-  },
-  {
-    question: "When should we arrive?",
-    answer: "Please arrive 15 minutes before the movie starts. Films begin promptly so you don't miss a moment."
-  },
-  {
-    question: "Do I need to pay on arrival?",
-    answer: "No — payment is taken at the time of booking and secures your seat. Nothing to pay on the night."
-  },
-  {
-    question: "Can I change or cancel my booking?",
-    answer: "If you need to make changes, please contact us at least 24 hours in advance and we'll do our best to help."
+    answer: "Each ticket includes a dessert and a drink, chosen on the day."
   },
   {
     question: "Is there parking nearby?",

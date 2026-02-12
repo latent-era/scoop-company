@@ -5,6 +5,7 @@ import { Cake } from "lucide-react";
 
 interface StickyMobileHeaderProps {
   selectedSize: "small" | "large" | null;
+  selectedButtercream?: "small" | "full" | "none";
   selectedFlavour: string | null;
   selectedSauces: string[];
   selectedToppings: string[];
@@ -29,6 +30,7 @@ const defaultGetFlavourName = (flavourId: string) => {
 
 export function StickyMobileHeader({
   selectedSize,
+  selectedButtercream = "small",
   selectedFlavour,
   selectedSauces,
   selectedToppings,
@@ -52,6 +54,10 @@ export function StickyMobileHeader({
 
   const hasSelection = selectedFlavour || selectedSauces.length > 0 || selectedToppings.length > 0;
 
+  const basePrice = selectedSize === "large" ? 34.99 : 27.99;
+  const buttercreamPrice = selectedButtercream === "full" ? 2.00 : 0;
+  const totalPrice = basePrice + buttercreamPrice;
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50 md:hidden">
       <div className="bg-white/95 backdrop-blur-sm border-b border-[#F8AFC8]/30 shadow-sm px-4 py-3">
@@ -67,6 +73,7 @@ export function StickyMobileHeader({
                 </p>
                 <p className="text-xs text-[#3D2B1F]/60 truncate">
                   {selectedSize === "small" ? "Small" : "Large"}
+                  {selectedButtercream !== "none" && ` · ${selectedButtercream === "full" ? "Full" : "Small"} buttercream`}
                   {selectedSauces.length > 0 && ` · ${selectedSauces.length} sauce${selectedSauces.length > 1 ? 's' : ''}`}
                   {selectedToppings.length > 0 && ` · ${selectedToppings.length} topping${selectedToppings.length > 1 ? 's' : ''}`}
                 </p>
@@ -76,6 +83,9 @@ export function StickyMobileHeader({
                 Build your birthday cake below
               </p>
             )}
+          </div>
+          <div className="flex-shrink-0">
+            <div className="text-lg font-bold text-[#F8AFC8]">{'\u00A3'}{totalPrice.toFixed(2)}</div>
           </div>
         </div>
       </div>
