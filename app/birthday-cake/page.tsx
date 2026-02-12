@@ -205,6 +205,7 @@ export default function BirthdayCakePage() {
       {/* Sticky Mobile Header */}
       <StickyMobileHeader
         selectedSize={selectedSize}
+        selectedButtercream={selectedButtercream}
         selectedFlavour={selectedFlavour}
         selectedSauces={selectedSauces}
         selectedToppings={selectedToppings}

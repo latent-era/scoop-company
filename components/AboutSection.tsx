@@ -1,45 +1,46 @@
 import { Film, Sparkles } from "lucide-react";
+import { Card } from "./ui/card";
 
 export function AboutSection() {
   return (
-    <section id="movies" className="py-20 bg-[#FFFBF8]">
+    <section id="about" className="py-20 bg-[#FFFBF8]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl" style={{ fontWeight: 800, color: '#1F1B24' }}>
-            🎬 Movie Schedule
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl text-center mb-4" style={{ fontWeight: 800, color: '#1F1B24' }}>
+            🎬 What's On
           </h2>
 
-          <p className="text-xl max-w-2xl mx-auto" style={{ color: '#717182', lineHeight: '1.8' }}>
-            Two magical movie nights for the whole family. Each ticket includes your choice of any dessert and any drink.
+          <p className="text-xl max-w-2xl mx-auto text-center mb-12" style={{ color: '#717182', lineHeight: '1.8' }}>
+            Two magical films to choose from. Each ticket includes a dessert and a drink — the perfect after-school treat.
           </p>
 
           {/* Movie Schedule */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 max-w-2xl mx-auto">
-            <div className="flex flex-col items-center gap-4 p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: '#F8AFC8' }}>
-                <Film className="w-8 h-8" style={{ color: '#D4526E' }} />
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <Card className="p-8 bg-white border-2 border-transparent hover:border-[#F8AFC8] transition-all hover:shadow-xl">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: '#F8AFC8' }}>
+                <Film className="w-8 h-8" style={{ color: '#FFFFFF' }} />
               </div>
-              <h3 style={{ fontWeight: 700, color: '#1F1B24' }}>Thursday 19th Feb</h3>
-              <p className="text-2xl">🌹</p>
-              <p style={{ fontWeight: 600, color: '#D4526E' }}>Gnomeo & Juliet</p>
-              <p className="text-sm" style={{ color: '#717182' }}>A gnome-tastic animated adventure for all ages.</p>
-            </div>
+              <h3 className="text-xl mb-2" style={{ fontWeight: 700, color: '#1F1B24' }}>Thursday 19th — 4:30pm</h3>
+              <p className="text-2xl mb-2">🎬</p>
+              <p className="text-lg mb-2" style={{ fontWeight: 600, color: '#F8AFC8' }}>Gnomeo & Juliet</p>
+              <p className="text-sm" style={{ color: '#717182' }}>A fun, colourful retelling of a classic story — perfect for younger viewers.</p>
+            </Card>
 
-            <div className="flex flex-col items-center gap-4 p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: '#D4526E' }}>
+            <Card className="p-8 bg-white border-2 border-transparent hover:border-[#F8AFC8] transition-all hover:shadow-xl">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: '#F38DB5' }}>
                 <Sparkles className="w-8 h-8" style={{ color: '#FFFFFF' }} />
               </div>
-              <h3 style={{ fontWeight: 700, color: '#1F1B24' }}>Friday 20th Feb</h3>
-              <p className="text-2xl">✨</p>
-              <p style={{ fontWeight: 600, color: '#D4526E' }}>Tangled</p>
-              <p className="text-sm" style={{ color: '#717182' }}>A magical Disney classic full of adventure and heart.</p>
-            </div>
+              <h3 className="text-xl mb-2" style={{ fontWeight: 700, color: '#1F1B24' }}>Friday 20th — 4:30pm</h3>
+              <p className="text-2xl mb-2">🎬</p>
+              <p className="text-lg mb-2" style={{ fontWeight: 600, color: '#F38DB5' }}>Tangled</p>
+              <p className="text-sm" style={{ color: '#717182' }}>A much-loved Disney favourite full of music, adventure, and laughs.</p>
+            </Card>
           </div>
 
           {/* Note */}
-          <div className="mt-8 p-4 rounded-xl" style={{ background: '#FFE8F0' }}>
+          <div className="mt-8 p-4 rounded-xl text-center" style={{ background: '#FFE8F0' }}>
             <p style={{ color: '#1F1B24', fontWeight: 600 }}>
-              Family-friendly • Limited seats available • Booking essential
+              ⏰ Films start promptly at 4:30pm. Please arrive 10–15 minutes early.
             </p>
           </div>
         </div>
