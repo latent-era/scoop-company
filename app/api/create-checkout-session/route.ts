@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
             description: 'Any dessert + any drink',
             images: ['https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800'],
           },
-          unit_amount: 1200, // £12.00 in pence
+          unit_amount: 1500, // £15.00 in pence
         },
         quantity: kidTickets,
       });
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
             description: 'Any dessert + any drink',
             images: ['https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800'],
           },
-          unit_amount: 1200, // £12.00 in pence
+          unit_amount: 1500, // £15.00 in pence
         },
         quantity: adultTickets,
       });
