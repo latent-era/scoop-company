@@ -9,7 +9,7 @@ export default function Hero() {
               Halloween Special • Family Friendly
             </div>
             <h1 className="text-[42px] leading-tight mt-3.5 font-black">
-              Scoop & Scream — <span className="text-pink">Halloween Movie Night</span>
+              Scoop & Scream: <span className="text-pink">Halloween Movie Night</span>
             </h1>
             <p className="text-[#e7e7ea] text-lg mt-2.5">
               £10 per person • <strong>Any dessert</strong> + <strong>Any drink</strong> included. One frightfully sweet night in our cosy gelato parlour.

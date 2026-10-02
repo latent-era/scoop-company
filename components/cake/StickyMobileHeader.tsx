@@ -54,7 +54,7 @@ export function StickyMobileHeader({
 
   const hasSelection = selectedFlavour || selectedSauces.length > 0 || selectedToppings.length > 0;
 
-  const basePrice = selectedSize === "large" ? 34.99 : 27.99;
+  const basePrice = selectedSize === "large" ? 39.99 : 32.99;
   const buttercreamPrice = selectedButtercream === "full" ? 2.00 : 0;
   const totalPrice = basePrice + buttercreamPrice;
 

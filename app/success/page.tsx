@@ -32,7 +32,7 @@ function SuccessContent() {
         if (typeof window !== 'undefined' && window.fbq) {
           window.fbq('track', 'Purchase', {
             currency: 'GBP',
-            value: isBirthdayCake ? 27.99 : isYuleLog ? 29.99 : 12,
+            value: isBirthdayCake ? 32.99 : isYuleLog ? 29.99 : 12,
             content_type: 'product',
             content_name: isBirthdayCake ? 'Gelato Cake' : isYuleLog ? 'Gelato Yule Log' : 'Movie Night Tickets',
           });
