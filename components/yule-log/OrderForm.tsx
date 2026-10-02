@@ -29,8 +29,8 @@ export interface FormData {
 
 // Pricing constants (same as in OrderSummary)
 const SIZE_PRICES = {
-  small: 27.99,
-  large: 34.99
+  small: 32.99,
+  large: 39.99
 };
 
 const BUTTERCREAM_PRICES = {

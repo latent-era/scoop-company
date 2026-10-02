@@ -16,30 +16,40 @@ export interface EventNight {
 export const EVENT_NIGHTS: readonly EventNight[] = [
   {
     key: '18-oct-warlingham',
-    displayName: 'Sun 18 Oct · Hotel Transylvania · 3pm · Warlingham',
-    value: 'Sun 18 Oct, 3pm, Warlingham',
+    displayName: 'Sun 18 Oct · Hotel Transylvania · 6.45pm · Warlingham',
+    value: 'Sun 18 Oct, 6.45pm, Warlingham',
     movie: 'Hotel Transylvania',
     venue: 'Warlingham',
-    date: '2026-10-18T15:00:00',
+    date: '2026-10-18T18:45:00',
     capacity: 26,
   },
   {
     key: '23-oct-oxted',
-    displayName: 'Fri 23 Oct · The Addams Family · 5pm · Oxted',
-    value: 'Fri 23 Oct, 5pm, Oxted',
+    displayName: 'Fri 23 Oct · The Addams Family · 7.45pm · Oxted',
+    value: 'Fri 23 Oct, 7.45pm, Oxted',
     movie: 'The Addams Family',
     venue: 'Oxted',
-    date: '2026-10-23T17:00:00',
+    date: '2026-10-23T19:45:00',
     capacity: 25,
   },
   {
     key: '24-oct-oxted',
-    displayName: 'Sat 24 Oct · Hotel Transylvania · 5pm · Oxted',
-    value: 'Sat 24 Oct, 5pm, Oxted',
+    displayName: 'Sat 24 Oct · Hotel Transylvania · 7.45pm · Oxted',
+    value: 'Sat 24 Oct, 7.45pm, Oxted',
     movie: 'Hotel Transylvania',
     venue: 'Oxted',
-    date: '2026-10-24T17:00:00',
+    date: '2026-10-24T19:45:00',
     capacity: 25,
+  },
+  {
+    key: '1-nov-oxted',
+    displayName: 'Sun 1 Nov · Obsession · 6.00pm · Oxted · 18+',
+    value: 'Sun 1 Nov, 6.00pm, Oxted',
+    movie: 'Obsession',
+    venue: 'Oxted',
+    date: '2026-11-01T18:00:00',
+    adultOnly: true,
+    capacity: 20,
   },
 ];
 
@@ -217,9 +227,18 @@ export async function reserveTickets(
     }
   }
 
-  // Validate inputs - general admission, one flat price, every booking needs a child.
+  // Validate inputs - general admission, one flat price. Family showings need at
+  // least one child; adults-only (18+) showings sell adult tickets only.
   const totalTickets = kidTickets + adultTickets;
-  if (kidTickets < 1) {
+  const isAdultOnly = nightInfo?.adultOnly === true;
+  if (isAdultOnly) {
+    if (adultTickets < 1) {
+      return { success: false, error: 'This is an adults-only (18+) showing. Please add at least one adult ticket.' };
+    }
+    if (kidTickets > 0) {
+      return { success: false, error: 'This is an adults-only (18+) showing. Child tickets are not available.' };
+    }
+  } else if (kidTickets < 1) {
     return { success: false, error: 'Every booking needs at least one child ticket.' };
   }
   if (totalTickets > 10) {
