@@ -88,6 +88,18 @@ export async function POST(request: NextRequest) {
           // Handle ticket order with inventory
           const { night_key, kid_tickets, adult_tickets, temp_session_id } = metadata;
 
+          // Not ours. The new booking site shares this Stripe account, so its
+          // table and party checkouts arrive here too — Stripe sends every
+          // event to every endpoint on the account. Answering 400 would make
+          // Stripe treat it as a failed delivery and retry for three days,
+          // and an endpoint that keeps failing eventually gets switched off,
+          // which would take this site's own cake and cinema confirmations
+          // with it. A session that is not ours is not an error.
+          if (!night_key && !temp_session_id) {
+            console.log('Ignoring session from another application:', session.id);
+            return NextResponse.json({ received: true, ignored: true });
+          }
+
           if (!night_key || !kid_tickets || !temp_session_id) {
             console.error('Missing required metadata fields');
             return NextResponse.json(
