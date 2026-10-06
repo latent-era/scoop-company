@@ -11,6 +11,21 @@ export async function POST(request: NextRequest) {
     const { name, email, phone, night, kidTickets, adultTickets } = await request.json();
 
     // Validate inputs
+    /* Cinema tickets are sold on thescoopcompany.co.uk now.
+       The page here redirects, but a browser that already had it open would
+       still post to this endpoint — and this till counts seats from its own KV
+       store while the new one counts them in Supabase, neither aware of the
+       other. Two people could buy the same last chair. So it refuses and says
+       where to go, rather than taking money for a seat it cannot vouch for. */
+    return NextResponse.json(
+      {
+        error:
+          'Cinema tickets have moved to thescoopcompany.co.uk/cinema. Your seats are booked there now.',
+        moved: 'https://thescoopcompany.co.uk/cinema',
+      },
+      { status: 410 },
+    );
+
     if (!name || !email || !phone || !night) {
       return NextResponse.json(
         { error: 'Missing required fields' },
