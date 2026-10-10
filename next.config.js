@@ -38,6 +38,17 @@ const nextConfig = {
         destination: 'https://thescoopcompany.co.uk/cinema',
         permanent: false,
       },
+      // 10 Oct 2026: everything now lives on thescoopcompany.co.uk, so each page goes to its new
+      // version there. /api and /admin stay, so late Stripe notices for old orders still land.
+      ...[
+        ['/', '/cake-builder'],
+        ['/success', '/'],
+        ['/cart-hire', '/cart-hire'], ['/cart-hire/mobile', '/cart-hire'],
+        ['/wholesale', '/wholesale'], ['/wholesale/mobile', '/wholesale'],
+        ['/menus', '/menu'], ['/menus/mobile', '/menu'],
+        ['/careers', '/careers'], ['/careers/mobile', '/careers'],
+        ['/pages/:file*', '/'],
+      ].map(([source, to]) => ({ source, destination: `https://thescoopcompany.co.uk${to}`, permanent: true })),
       {
         source: '/cinema/mobile',
         destination: 'https://thescoopcompany.co.uk/cinema',
