@@ -86,16 +86,6 @@ export function OrderForm({ cart, onBack, earliestCollection }: OrderFormProps) 
     setIsSubmitting(true);
     setError(null);
 
-    // Track InitiateCheckout event with Meta Pixel
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'InitiateCheckout', {
-        currency: 'GBP',
-        value: cartTotal,
-        content_type: 'product',
-        content_name: 'Gelato Cake',
-        num_items: cart.reduce((sum, item) => sum + item.quantity, 0),
-      });
-    }
 
     try {
       const response = await fetch("/api/create-gelato-cake-checkout", {
