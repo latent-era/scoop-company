@@ -7,7 +7,7 @@ export default function Tickets() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    night: 'Friday 24 Oct — 6:00pm',
+    night: 'Friday 24 Oct, 6:00pm',
     tickets: 2,
   });
 
@@ -44,7 +44,7 @@ export default function Tickets() {
           <div>
             <h2 className="m-0 mb-2 text-[30px] font-bold">Secure Your Spot</h2>
             <p className="text-muted">
-              Pick your night, tell us how many tickets, and you&apos;re in. Your confirmation email is your entry — just show it at the door.
+              Pick your night, tell us how many tickets, and you&apos;re in. Your confirmation email is your entry, just show it at the door.
             </p>
             <form onSubmit={handleSubmit} className="mt-4 grid gap-2.5 max-w-[480px]">
               <label className="block">
@@ -76,9 +76,9 @@ export default function Tickets() {
                   onChange={(e) => setFormData({ ...formData, night: e.target.value })}
                   className="w-full px-3 py-3 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-deep"
                 >
-                  <option>Friday 24 Oct — 6:00pm</option>
-                  <option>Saturday 25 Oct — 6:00pm</option>
-                  <option>Sunday 26 Oct — 6:00pm</option>
+                  <option>Friday 24 Oct, 6:00pm</option>
+                  <option>Saturday 25 Oct, 6:00pm</option>
+                  <option>Sunday 26 Oct, 6:00pm</option>
                 </select>
               </label>
               <label className="block">
@@ -109,7 +109,7 @@ export default function Tickets() {
             <div className="mt-2.5 space-y-2.5">
               <details open className="border border-border rounded-xl p-3 bg-white">
                 <summary className="cursor-pointer font-medium">Is it suitable for kids?</summary>
-                <div className="text-muted mt-2 text-sm">Yes — family‑friendly spooky movies.</div>
+                <div className="text-muted mt-2 text-sm">Yes, family‑friendly spooky movies.</div>
               </details>
               <details className="border border-border rounded-xl p-3 bg-white">
                 <summary className="cursor-pointer font-medium">What&apos;s included in £10?</summary>
@@ -117,7 +117,7 @@ export default function Tickets() {
               </details>
               <details className="border border-border rounded-xl p-3 bg-white">
                 <summary className="cursor-pointer font-medium">Do we pick desserts in advance?</summary>
-                <div className="text-muted mt-2 text-sm">Nope — choose on the night.</div>
+                <div className="text-muted mt-2 text-sm">Nope, choose on the night.</div>
               </details>
               <details className="border border-border rounded-xl p-3 bg-white">
                 <summary className="cursor-pointer font-medium">Refunds?</summary>

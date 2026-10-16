@@ -17,7 +17,7 @@ export default function Details() {
               Fri 24–Sun 26 October · Early seating from 6:00pm · Movie starts 6:30pm
             </div>
             <div className="inline-flex items-center gap-2 bg-white border border-border rounded-xl px-2.5 py-2 mt-2.5">
-              🎟️ £10 per person — includes dessert + drink
+              🎟️ £10 per person, includes dessert + drink
             </div>
           </div>
           <div className="bg-white border border-border rounded-2xl p-4.5 shadow-sm">

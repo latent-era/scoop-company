@@ -13,8 +13,8 @@ import { StickyMobileHeader } from "@/components/cake/StickyMobileHeader";
 
 // Size options with pricing
 const SIZES = [
-  { id: "small", name: "Small", serves: "6–8", price: 27.99, note: "Excludes chocolate & nut flavours" },
-  { id: "large", name: "Large", serves: "10–12", price: 34.99, note: "All flavours available" }
+  { id: "small", name: "Small", serves: "6–8", price: 32.99, note: "Excludes chocolate & nut flavours" },
+  { id: "large", name: "Large", serves: "10–12", price: 39.99, note: "All flavours available" }
 ] as const;
 
 type SizeId = typeof SIZES[number]["id"];
@@ -22,7 +22,7 @@ type SizeId = typeof SIZES[number]["id"];
 // Buttercream options
 const BUTTERCREAM_OPTIONS = [
   { id: "small", name: "Small Decorative", description: "Light decorative swirls", price: 0, dietary: "(Vg, GF)" },
-  { id: "full", name: "Full Buttercream", description: "Fuller coverage", price: 2.00, dietary: "(Vg, GF)" },
+  { id: "full", name: "Full Buttercream", description: "Fuller coverage", price: 5.00, dietary: "(Vg, GF)" },
   { id: "none", name: "No Buttercream", description: "Pure gelato experience", price: 0, dietary: "" }
 ] as const;
 
@@ -30,7 +30,6 @@ type ButtercreamId = typeof BUTTERCREAM_OPTIONS[number]["id"];
 
 // Flavours with availability based on size
 const FLAVOURS = [
-  { id: 'pistachio', name: 'Pistachio', color: 'from-[#BBF7D0] to-[#86EFAC]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'GF', 'D', 'N'], available: 'large-only' },
   { id: 'dark-chocolate', name: 'Dark Chocolate', color: 'from-[#78350F] to-[#451A03]', textColor: 'text-white', dietary: ['V', 'Vg', 'H', 'GF'], available: 'large-only' },
   { id: 'milk-chocolate', name: 'Milk Chocolate', color: 'from-[#A16207] to-[#854D0E]', textColor: 'text-white', dietary: ['V', 'H', 'GF', 'D', 'S'], available: 'large-only' },
   { id: 'jersey-cream', name: 'Jersey Cream', color: 'from-[#FEF9C3] to-[#FDE68A]', textColor: 'text-[#3D2B1F]', dietary: ['V', 'H', 'GF', 'D'], available: 'both' },
@@ -57,8 +56,6 @@ const TOPPINGS = [
   { id: 'oreo-crumb', name: 'Oreo Crumb', emoji: '🍪', dietary: ['Vg', 'S', 'G'] },
   { id: 'mixed-nuts', name: 'Mixed Nuts', emoji: '🥜', dietary: ['Vg', 'N', 'GF'] },
   { id: 'biscoff-crumb', name: 'Biscoff Crumb', emoji: '🍪', dietary: ['Vg', 'S', 'G'] },
-  { id: 'raspberry-crisp', name: 'Raspberry Crisp', emoji: '🍓', dietary: ['Vg', 'GF'] },
-  { id: 'strawberry-popping-candy', name: 'Strawberry Popping Candy', emoji: '🍬', dietary: ['Vg', 'GF'] },
   { id: 'marshmallows', name: 'Mini Marshmallows', emoji: '☁️', dietary: ['GF'] },
 ];
 
@@ -67,6 +64,7 @@ export function GelatoCakeSection() {
   const [selectedSize, setSelectedSize] = useState<SizeId>("small");
   const [selectedButtercream, setSelectedButtercream] = useState<ButtercreamId>("small");
   const [selectedFlavour, setSelectedFlavour] = useState<string | null>(null);
+  const [customFlavour, setCustomFlavour] = useState("");
   const [selectedSauces, setSelectedSauces] = useState<string[]>([]);
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
 
@@ -78,7 +76,7 @@ export function GelatoCakeSection() {
   const [showForm, setShowForm] = useState(false);
 
   // Calculate current item price
-  const sizePrice = SIZES.find(s => s.id === selectedSize)?.price || 27.99;
+  const sizePrice = SIZES.find(s => s.id === selectedSize)?.price || 32.99;
   const buttercreamPrice = BUTTERCREAM_OPTIONS.find(b => b.id === selectedButtercream)?.price || 0;
   const currentItemPrice = selectedFlavour ? sizePrice + buttercreamPrice : 0;
 
@@ -118,12 +116,14 @@ export function GelatoCakeSection() {
 
   const addToCart = () => {
     if (!selectedFlavour) return;
+    if (selectedFlavour === 'other' && !customFlavour.trim()) return;
 
     const newItem: CartItem = {
       id: editingItemId || Date.now().toString(),
       size: selectedSize,
       buttercream: selectedButtercream,
       flavour: selectedFlavour,
+      customFlavour: selectedFlavour === 'other' ? customFlavour.trim() : undefined,
       sauces: [...selectedSauces],
       toppings: [...selectedToppings],
       quantity: 1
@@ -140,6 +140,7 @@ export function GelatoCakeSection() {
     setSelectedSize("small");
     setSelectedButtercream("small");
     setSelectedFlavour(null);
+    setCustomFlavour("");
     setSelectedSauces([]);
     setSelectedToppings([]);
   };
@@ -150,6 +151,7 @@ export function GelatoCakeSection() {
       setSelectedSize(item.size);
       setSelectedButtercream(item.buttercream);
       setSelectedFlavour(item.flavour);
+      setCustomFlavour(item.customFlavour || "");
       setSelectedSauces([...item.sauces]);
       setSelectedToppings([...item.toppings]);
       setEditingItemId(itemId);
@@ -168,6 +170,7 @@ export function GelatoCakeSection() {
       setSelectedSize("small");
       setSelectedButtercream("small");
       setSelectedFlavour(null);
+      setCustomFlavour("");
       setSelectedSauces([]);
       setSelectedToppings([]);
     }
@@ -185,6 +188,7 @@ export function GelatoCakeSection() {
     setSelectedSize("small");
     setSelectedButtercream("small");
     setSelectedFlavour(null);
+    setCustomFlavour("");
     setSelectedSauces([]);
     setSelectedToppings([]);
   };
@@ -513,7 +517,41 @@ export function GelatoCakeSection() {
                       </button>
                     );
                   })}
+                  <button
+                    onClick={() => setSelectedFlavour('other')}
+                    className={`relative p-4 rounded-xl border-2 transition-all text-left ${
+                      selectedFlavour === 'other'
+                        ? "bg-gradient-to-br from-[#FDE68A] to-[#FCA5A5] border-[#F8AFC8] shadow-md"
+                        : "border-dashed border-gray-300 bg-white hover:border-[#F8AFC8]/50"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <div className="font-semibold text-left text-[#3D2B1F]">Other, request a flavour</div>
+                        <div className="text-xs text-[#3D2B1F]/60 mt-1">Any flavour from our current menu · subject to availability</div>
+                      </div>
+                      {selectedFlavour === 'other' && (
+                        <div className="w-6 h-6 bg-[#F8AFC8] rounded-full flex items-center justify-center text-white text-sm flex-shrink-0">
+                          <Check className="w-4 h-4" />
+                        </div>
+                      )}
+                    </div>
+                  </button>
                 </div>
+                {selectedFlavour === 'other' && (
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-[#3D2B1F] mb-2">Which flavour would you like?</label>
+                    <input
+                      type="text"
+                      value={customFlavour}
+                      onChange={(e) => setCustomFlavour(e.target.value)}
+                      placeholder="e.g. Biscoff, Bubblegum, Coconut…"
+                      maxLength={80}
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#F8AFC8] focus:outline-none text-[#3D2B1F]"
+                    />
+                    <p className="text-xs text-[#3D2B1F]/60 mt-2">Pick any flavour from our current menu. We&apos;ll do our best, but it depends on what&apos;s in stock on the day, so no promises.</p>
+                  </div>
+                )}
               </div>
 
               {/* Step 4: Choose Sauces */}
@@ -708,7 +746,7 @@ export function GelatoCakeSection() {
         <p>The Scoop Company · Gelato by Maria</p>
         <p className="text-sm mt-2">Making celebrations sweeter, one gelato cake at a time 🎉</p>
         <p className="text-sm mt-2">
-          <a href="/careers" className="underline underline-offset-2">We&apos;re hiring — join the team</a>
+          <a href="/careers" className="underline underline-offset-2">We&apos;re hiring, join the team</a>
         </p>
         <div className="flex justify-center gap-4 text-xs text-[#3D2B1F]/50 mt-4">
           <span>🍦 Hand-crafted gelato</span>
