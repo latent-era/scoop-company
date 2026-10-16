@@ -7,13 +7,6 @@ import { Sparkles, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-// Declare fbq for TypeScript
-declare global {
-  interface Window {
-    fbq?: (action: string, eventName: string, params?: any) => void;
-  }
-}
-
 function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
@@ -28,15 +21,6 @@ function SuccessContent() {
       setTimeout(() => {
         setLoading(false);
 
-        // Track Purchase event with Meta Pixel
-        if (typeof window !== 'undefined' && window.fbq) {
-          window.fbq('track', 'Purchase', {
-            currency: 'GBP',
-            value: isBirthdayCake ? 32.99 : isYuleLog ? 29.99 : 12,
-            content_type: 'product',
-            content_name: isBirthdayCake ? 'Gelato Cake' : isYuleLog ? 'Gelato Yule Log' : 'Movie Night Tickets',
-          });
-        }
       }, 500);
     } else {
       setLoading(false);

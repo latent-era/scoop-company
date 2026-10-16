@@ -23,13 +23,6 @@ interface Availability {
 const MAX_KIDS = 20;
 const MAX_ADULTS = 15;
 
-// Declare fbq for TypeScript
-declare global {
-  interface Window {
-    fbq?: (action: string, eventName: string, params?: any) => void;
-  }
-}
-
 export function TicketFormSection() {
   const [formData, setFormData] = useState({
     name: "",
@@ -136,16 +129,6 @@ export function TicketFormSection() {
 
     setLoading(true);
 
-    // Track InitiateCheckout event with Meta Pixel
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'InitiateCheckout', {
-        currency: 'GBP',
-        value: calculateTotal(),
-        content_type: 'product',
-        content_name: 'Kids Cinema Night Tickets',
-        num_items: getTotalTickets(),
-      });
-    }
 
     try {
       const response = await fetch('/api/create-checkout-session', {

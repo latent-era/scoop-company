@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import Navigation from "@/components/Navigation";
-import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,29 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '547108697873362');
-            fbq('track', 'PageView');
-          `}
-        </Script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{display: 'none'}}
-            src="https://www.facebook.com/tr?id=547108697873362&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
+        {/* 16 Oct 2026: the Meta pixel is gone from this site. Every page here
+            forwards to thescoopcompany.co.uk, which carries the same pixel id
+            547108697873362. Two sites firing one pixel made the numbers on
+            Andrew's side impossible to read. /api and /admin are all that still
+            render from here, and they are not customer-facing. */}
       </head>
       <body>
         <ThemeProvider
