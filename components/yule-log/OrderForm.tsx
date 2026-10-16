@@ -29,8 +29,8 @@ export interface FormData {
 
 // Pricing constants (same as in OrderSummary)
 const SIZE_PRICES = {
-  small: 27.99,
-  large: 34.99
+  small: 32.99,
+  large: 39.99
 };
 
 const BUTTERCREAM_PRICES = {
@@ -86,16 +86,6 @@ export function OrderForm({ cart, onBack, earliestCollection }: OrderFormProps) 
     setIsSubmitting(true);
     setError(null);
 
-    // Track InitiateCheckout event with Meta Pixel
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'InitiateCheckout', {
-        currency: 'GBP',
-        value: cartTotal,
-        content_type: 'product',
-        content_name: 'Gelato Cake',
-        num_items: cart.reduce((sum, item) => sum + item.quantity, 0),
-      });
-    }
 
     try {
       const response = await fetch("/api/create-gelato-cake-checkout", {

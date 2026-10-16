@@ -11,6 +11,7 @@ interface CartItem {
   size: 'small' | 'large';
   buttercream: 'small' | 'full' | 'none';
   flavour: string;
+  customFlavour?: string;
   sauces: string[];
   toppings: string[];
   quantity: number;
@@ -26,13 +27,13 @@ interface CustomerInfo {
 
 // Pricing constants
 const SIZE_PRICES = {
-  small: 27.99,
-  large: 34.99
+  small: 32.99,
+  large: 39.99
 };
 
 const BUTTERCREAM_PRICES = {
   small: 0,
-  full: 2.00,
+  full: 5.00,
   none: 0
 };
 
@@ -52,6 +53,13 @@ const getFlavourName = (flavourId: string) => {
   };
   return names[flavourId] || flavourId;
 };
+
+// An "other" flavour carries the customer's free-text request (from our menu,
+// subject to availability); otherwise it's one of the standard flavours.
+const flavourLabel = (item: CartItem) =>
+  item.flavour === 'other'
+    ? `Other: ${item.customFlavour || 'requested'} (subject to availability)`
+    : getFlavourName(item.flavour);
 
 // Calculate price for a single item
 const calculateItemPrice = (item: CartItem): number => {
@@ -107,7 +115,7 @@ export async function POST(request: NextRequest) {
       const customizations = [
         `Size: ${sizeLabel}`,
         `Buttercream: ${buttercreamLabel}`,
-        `Flavour: ${getFlavourName(item.flavour)}`,
+        `Flavour: ${flavourLabel(item)}`,
       ];
 
       if (item.sauces.length > 0) {
@@ -136,8 +144,11 @@ export async function POST(request: NextRequest) {
     // Calculate total for metadata
     const total = cart.reduce((sum, item) => sum + (calculateItemPrice(item) * item.quantity), 0);
 
-    // Format collection date
+    // Format collection date. Force UK time, the date arrives as a UTC instant
+    // (a UK-local midnight becomes 23:00 the previous day during BST), so
+    // formatting without a timeZone would print the day before.
     const collectionDateFormatted = new Date(customerInfo.collectionDate).toLocaleDateString('en-GB', {
+      timeZone: 'Europe/London',
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -157,7 +168,7 @@ export async function POST(request: NextRequest) {
         customizations.push(`T: ${item.toppings.join(', ')}`);
       }
 
-      return `#${index + 1}: ${sizeLabel} ${getFlavourName(item.flavour)} (${buttercreamLabel}) x${item.quantity}${customizations.length > 0 ? ` [${customizations.join('; ')}]` : ''}`;
+      return `#${index + 1}: ${sizeLabel} ${flavourLabel(item)} (${buttercreamLabel}) x${item.quantity}${customizations.length > 0 ? ` [${customizations.join('; ')}]` : ''}`;
     }).join(' | ');
 
     // Create Stripe checkout session

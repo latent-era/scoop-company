@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { confirmBooking, releaseReservation } from '@/lib/inventory';
-import { notifyCakeOrder } from '@/lib/orderNotify';
+import { confirmBooking, releaseReservation, getNightFromKey } from '@/lib/inventory';
+import { notifyCakeOrder, notifyCinemaBooking } from '@/lib/orderNotify';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
   apiVersion: '2025-02-24.acacia',
@@ -88,6 +88,18 @@ export async function POST(request: NextRequest) {
           // Handle ticket order with inventory
           const { night_key, kid_tickets, adult_tickets, temp_session_id } = metadata;
 
+          // Not ours. The new booking site shares this Stripe account, so its
+          // table and party checkouts arrive here too — Stripe sends every
+          // event to every endpoint on the account. Answering 400 would make
+          // Stripe treat it as a failed delivery and retry for three days,
+          // and an endpoint that keeps failing eventually gets switched off,
+          // which would take this site's own cake and cinema confirmations
+          // with it. A session that is not ours is not an error.
+          if (!night_key && !temp_session_id) {
+            console.log('Ignoring session from another application:', session.id);
+            return NextResponse.json({ received: true, ignored: true });
+          }
+
           if (!night_key || !kid_tickets || !temp_session_id) {
             console.error('Missing required metadata fields');
             return NextResponse.json(
@@ -111,6 +123,41 @@ export async function POST(request: NextRequest) {
           }
 
           console.log('Ticket booking confirmed for session:', session.id);
+
+          // Capture the attendee: confirmation email to the customer + roster push
+          // into Scoop Inbox. Best-effort, never blocks or fails the webhook.
+          const night = getNightFromKey(night_key);
+          if (night) {
+            const kids = parseInt(kid_tickets);
+            const adults = parseInt(adult_tickets || '0');
+            const onDate = night.date.slice(0, 10);
+            const startTime = night.date.slice(11, 16);
+            const d = new Date(night.date);
+            const weekday = d.toLocaleDateString('en-GB', { weekday: 'short' });
+            const day = d.getDate();
+            const month = d.toLocaleDateString('en-GB', { month: 'short' });
+            let h = d.getHours();
+            const ampm = h >= 12 ? 'pm' : 'am';
+            h = h % 12 || 12;
+            const mins = d.getMinutes();
+            const timeLabel = mins ? `${h}.${String(mins).padStart(2, '0')}${ampm}` : `${h}${ampm}`;
+            const whenLabel = `${weekday} ${day} ${month}, ${timeLabel}, ${night.venue}`;
+            await notifyCinemaBooking({
+              showingKey: night_key,
+              film: night.movie,
+              venue: night.venue || '',
+              onDate,
+              startTime,
+              whenLabel,
+              name: metadata.customer_name || '',
+              email: session.customer_email || metadata.customer_email || null,
+              phone: metadata.customer_phone || null,
+              kids,
+              adults,
+              amountPence: session.amount_total ?? null,
+              stripeSession: session.id,
+            });
+          }
         }
         break;
       }

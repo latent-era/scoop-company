@@ -94,8 +94,10 @@ export async function POST(request: NextRequest) {
     // Calculate total for metadata
     const total = cart.reduce((sum, item) => sum + (BASE_PRICE * item.quantity), 0);
 
-    // Format collection date
+    // Format collection date in UK time (see gelato-cake route: a UTC instant
+    // would otherwise print the previous day during BST).
     const collectionDateFormatted = new Date(customerInfo.collectionDate).toLocaleDateString('en-GB', {
+      timeZone: 'Europe/London',
       weekday: 'long',
       year: 'numeric',
       month: 'long',

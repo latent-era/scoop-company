@@ -7,6 +7,7 @@ export interface CartItem {
   size: "small" | "large";
   buttercream: "small" | "full" | "none";
   flavour: string;
+  customFlavour?: string;
   sauces: string[];
   toppings: string[];
   quantity: number;
@@ -22,8 +23,8 @@ interface OrderSummaryProps {
 
 // Pricing constants
 const SIZE_PRICES = {
-  small: 27.99,
-  large: 34.99
+  small: 32.99,
+  large: 39.99
 };
 
 const BUTTERCREAM_PRICES = {
@@ -128,7 +129,7 @@ export function OrderSummary({
                       <p className="text-[#3D2B1F] font-medium">
                         Gelato Cake #{index + 1}
                       </p>
-                      <p className="text-sm text-[#3D2B1F]/60">{getFlavourName(item.flavour)}</p>
+                      <p className="text-sm text-[#3D2B1F]/60">{item.flavour === 'other' ? (item.customFlavour ? `Other: ${item.customFlavour} (subject to availability)` : 'Other flavour request') : getFlavourName(item.flavour)}</p>
                     </div>
                     <div className="flex gap-1">
                       <Button

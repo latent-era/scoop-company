@@ -8,23 +8,48 @@ export interface EventNight {
   movie: string;
   date: string; // ISO format: '2025-12-20T17:00:00'
   adultOnly?: boolean;
+  venue?: string;
+  capacity: number;
 }
 
 // Event nights configuration
 export const EVENT_NIGHTS: readonly EventNight[] = [
   {
-    key: '19-feb',
-    displayName: '🌹 Thu 19 Feb - Gnomeo & Juliet - 4:30PM',
-    value: 'Thursday 19 Feb — 4:30pm',
-    movie: 'Gnomeo & Juliet',
-    date: '2026-02-19T16:30:00'
+    key: '18-oct-warlingham',
+    displayName: 'Sun 18 Oct · Hotel Transylvania · 6.45pm · Warlingham',
+    value: 'Sun 18 Oct, 6.45pm, Warlingham',
+    movie: 'Hotel Transylvania',
+    venue: 'Warlingham',
+    date: '2026-10-18T18:45:00',
+    capacity: 26,
   },
   {
-    key: '20-feb',
-    displayName: '✨ Fri 20 Feb - Tangled - 4:30PM',
-    value: 'Friday 20 Feb — 4:30pm',
-    movie: 'Tangled',
-    date: '2026-02-20T16:30:00'
+    key: '23-oct-oxted',
+    displayName: 'Fri 23 Oct · The Addams Family · 7.45pm · Oxted',
+    value: 'Fri 23 Oct, 7.45pm, Oxted',
+    movie: 'The Addams Family',
+    venue: 'Oxted',
+    date: '2026-10-23T19:45:00',
+    capacity: 25,
+  },
+  {
+    key: '24-oct-oxted',
+    displayName: 'Sat 24 Oct · Hotel Transylvania · 7.45pm · Oxted',
+    value: 'Sat 24 Oct, 7.45pm, Oxted',
+    movie: 'Hotel Transylvania',
+    venue: 'Oxted',
+    date: '2026-10-24T19:45:00',
+    capacity: 25,
+  },
+  {
+    key: '1-nov-oxted',
+    displayName: 'Sun 1 Nov · Obsession · 6.00pm · Oxted · 18+',
+    value: 'Sun 1 Nov, 6.00pm, Oxted',
+    movie: 'Obsession',
+    venue: 'Oxted',
+    date: '2026-11-01T18:00:00',
+    adultOnly: true,
+    capacity: 20,
   },
 ];
 
@@ -49,7 +74,7 @@ export const GELATO_CAKES_SOLD_OUT = false;
 // It shows a banner and stops the date picker offering any earlier date, so no
 // one can build and pay for a cake they can't collect. Set to '' to switch this
 // off and revert to the normal 72-hours-notice rule.
-export const GELATO_CAKES_EARLIEST_COLLECTION = '2026-08-31';
+export const GELATO_CAKES_EARLIEST_COLLECTION = '2026-09-05';
 
 // Types
 export interface InventoryData {
@@ -71,6 +96,8 @@ export interface Availability {
   value: string;
   kidTicketsRemaining: number;
   adultTicketsRemaining: number;
+  remaining: number;
+  capacity: number;
   isSoldOut: boolean;
   adultOnly?: boolean;
 }
@@ -135,16 +162,19 @@ export async function getAvailability(nightKey: string): Promise<Availability> {
   const reservedKids = reservations.reduce((sum, r) => sum + r.kidTickets, 0);
   const reservedAdults = reservations.reduce((sum, r) => sum + r.adultTickets, 0);
 
-  const kidTicketsRemaining = MAX_KID_TICKETS - inventory.kid_tickets_sold - reservedKids;
-  const adultTicketsRemaining = MAX_ADULT_TICKETS - inventory.adult_tickets_sold - reservedAdults;
+  const capacity = nightInfo.capacity ?? 25;
+  const reservedTotal = reservedKids + reservedAdults;
+  const remaining = Math.max(0, capacity - inventory.kid_tickets_sold - inventory.adult_tickets_sold - reservedTotal);
 
   return {
     nightKey,
     displayName: nightInfo.displayName,
     value: nightInfo.value,
-    kidTicketsRemaining: Math.max(0, kidTicketsRemaining),
-    adultTicketsRemaining: Math.max(0, adultTicketsRemaining),
-    isSoldOut: nightInfo.adultOnly ? adultTicketsRemaining <= 0 : kidTicketsRemaining <= 0,
+    kidTicketsRemaining: remaining,
+    adultTicketsRemaining: remaining,
+    remaining,
+    capacity,
+    isSoldOut: remaining <= 0,
     adultOnly: nightInfo.adultOnly,
   };
 }
@@ -183,9 +213,7 @@ export async function reserveTickets(
   adultTickets: number,
   sessionId: string
 ): Promise<{ success: boolean; error?: string }> {
-  // Check if this is an adult-only event
   const nightInfo = getNightFromKey(nightKey);
-  const isAdultOnly = nightInfo?.adultOnly === true;
 
   // Check if booking is being made too late (same day after 3pm)
   if (nightInfo) {
@@ -199,29 +227,31 @@ export async function reserveTickets(
     }
   }
 
-  // Validate inputs
-  if (isAdultOnly && kidTickets > 0) {
-    return { success: false, error: 'This is an adults-only event. Kid tickets are not available.' };
+  // Validate inputs - general admission, one flat price. Family showings need at
+  // least one child; adults-only (18+) showings sell adult tickets only.
+  const totalTickets = kidTickets + adultTickets;
+  const isAdultOnly = nightInfo?.adultOnly === true;
+  if (isAdultOnly) {
+    if (adultTickets < 1) {
+      return { success: false, error: 'This is an adults-only (18+) showing. Please add at least one adult ticket.' };
+    }
+    if (kidTickets > 0) {
+      return { success: false, error: 'This is an adults-only (18+) showing. Child tickets are not available.' };
+    }
+  } else if (kidTickets < 1) {
+    return { success: false, error: 'Every booking needs at least one child ticket.' };
+  }
+  if (totalTickets > 10) {
+    return { success: false, error: 'Up to 10 tickets per booking. For a bigger group, please email us.' };
   }
 
-  if (kidTickets > 8 || adultTickets > 8) {
-    return { success: false, error: 'Maximum 8 tickets per type' };
-  }
-
-  // Check availability
+  // Check availability (total seats, general admission)
   const availability = await getAvailability(nightKey);
 
-  if (availability.kidTicketsRemaining < kidTickets) {
+  if (availability.remaining < totalTickets) {
     return {
       success: false,
-      error: `Only ${availability.kidTicketsRemaining} kid ticket(s) remaining for this night`
-    };
-  }
-
-  if (availability.adultTicketsRemaining < adultTickets) {
-    return {
-      success: false,
-      error: `Only ${availability.adultTicketsRemaining} adult ticket(s) remaining for this night`
+      error: `Only ${availability.remaining} seat(s) left for this showing.`
     };
   }
 

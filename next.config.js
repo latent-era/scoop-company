@@ -4,8 +4,12 @@
 // system, with a distinct file per screen size. They live in public/pages and
 // are served at clean URLs here; a small script in each file picks desktop or
 // mobile by width. The gelato cake site stays a normal Next.js app at /.
+// `/cinema` has moved out of this list: it is sold on thescoopcompany.co.uk
+// now, and the two sites counted seats separately — this one from its own KV
+// store, the new one from Supabase, neither aware of the other. Two people
+// could buy the last chair. The page file stays in public/pages, unserved, in
+// case any of it is wanted again.
 const MARKETING_PAGES = [
-  { route: '/cinema', file: 'kids-cinema-nights' },
   { route: '/cart-hire', file: 'gelato-cart-hire' },
   { route: '/wholesale', file: 'gelato-by-maria-wholesale' },
   { route: '/menus', file: 'scoop-menus' },
@@ -22,6 +26,35 @@ const nextConfig = {
 
   async redirects() {
     return [
+      // Cinema tickets are sold on the new site. Everything that pointed here —
+      // posts, printed cards, old links — lands on the page that can actually
+      // take the money, rather than on a second till selling the same seats.
+      //
+      // Temporary (307) rather than permanent: a 308 is cached hard by the
+      // browser and cannot be taken back, and the cinema is seasonal enough
+      // that it may yet want its own page here again.
+      {
+        source: '/cinema',
+        destination: 'https://thescoopcompany.co.uk/cinema',
+        permanent: false,
+      },
+      // 10 Oct 2026: everything now lives on thescoopcompany.co.uk, so each page goes to its new
+      // version there. /api and /admin stay, so late Stripe notices for old orders still land.
+      ...[
+        ['/', '/cake-builder'],
+        ['/success', '/'],
+        ['/cart-hire', '/cart-hire'], ['/cart-hire/mobile', '/cart-hire'],
+        ['/wholesale', '/wholesale'], ['/wholesale/mobile', '/wholesale'],
+        ['/menus', '/menu'], ['/menus/mobile', '/menu'],
+        ['/careers', '/careers'], ['/careers/mobile', '/careers'],
+        ['/pages/:file*', '/'],
+      ].map(([source, to]) => ({ source, destination: `https://thescoopcompany.co.uk${to}`, permanent: true })),
+      {
+        source: '/cinema/mobile',
+        destination: 'https://thescoopcompany.co.uk/cinema',
+        permanent: false,
+      },
+
       // Printed QR codes point at /gelato-cake. The cake now opens the home page,
       // so this URL must keep working for every flyer already out there.
       // Deliberately temporary (307), not permanent (308): a 308 is cached hard by
